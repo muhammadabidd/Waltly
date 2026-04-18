@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/muhammadabid/Documents/GitHub/HitungDuitWebsite -type f -name \"*.json\" -o -name \"*.yaml\" -o -name \"*.yml\" -o -name \"*.po\" -o -name \"*.pot\" 2>/dev/null | head -20)",
+      "Bash(grep -r \"i18n\\\\|i18next\\\\|react-intl\\\\|next-intl\\\\|gettext\\\\|translation\\\\|locale\\\\|language\" /Users/muhammadabid/Documents/GitHub/HitungDuitWebsite --include=\"*.js\" --include=\"*.jsx\" --include=\"*.ts\" --include=\"*.tsx\" --include=\"*.json\" 2>/dev/null | head -20)",
+      "Bash(git init:*)"
+    ]
+  }
+}

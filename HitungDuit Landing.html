@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HitungDuit — Budget harian yang simpel & jujur</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--hd-font-sans);
+    background: var(--hd-bg);
+    color: var(--hd-dark);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; }
+
+  /* ---------- LAYOUT ---------- */
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  section { position: relative; }
+
+  /* ---------- NAV ---------- */
+  .nav {
+    position: sticky; top: 16px; z-index: 100;
+    margin: 16px auto 0; max-width: 1100px; padding: 0 16px;
+  }
+  .nav-inner {
+    background: rgba(28,28,46,0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 999px;
+    padding: 10px 10px 10px 22px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 10px 30px rgba(28,28,46,0.18);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 16px; letter-spacing: -0.01em; }
+  .brand-mark {
+    width: 28px; height: 28px; border-radius: 8px;
+    object-fit: cover; display: block; flex-shrink: 0;
+  }
+  .nav-links { display: flex; gap: 26px; color: rgba(255,255,255,0.75); font-size: 13px; font-weight: 500; }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta {
+    background: var(--hd-lime); color: var(--hd-dark);
+    padding: 9px 18px; border-radius: 999px;
+    font-weight: 700; font-size: 13px;
+    transition: transform 120ms, box-shadow 200ms;
+  }
+  .nav-cta:hover { box-shadow: 0 6px 18px rgba(200,240,77,0.45); }
+  .nav-cta:active { transform: scale(0.96); }
+  .nav-end { display: flex; align-items: center; gap: 8px; }
+
+  /* Language dropdown */
+  .lang-dropdown { position: relative; }
+  .lang-btn {
+    background: rgba(255,255,255,0.1); color: #fff; border: none;
+    padding: 9px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 6px;
+    transition: background 150ms; white-space: nowrap;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.18); }
+  .lang-menu {
+    display: none; position: absolute; right: 0; top: calc(100% + 8px);
+    background: rgba(28,28,46,0.97); backdrop-filter: blur(14px);
+    border-radius: 16px; padding: 6px; min-width: 160px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    z-index: 200;
+  }
+  .lang-menu.open { display: block; }
+  .lang-menu button {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    background: none; border: none; color: rgba(255,255,255,0.8);
+    padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 600;
+    cursor: pointer; text-align: left; transition: background 120ms;
+  }
+  .lang-menu button:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .lang-menu button.active { color: var(--hd-lime); }
+  @media (max-width: 760px) { .nav-links { display: none; } }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 100px 0 60px;
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--hd-dark); color: #fff;
+    padding: 7px 14px 7px 8px; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+  }
+  .eyebrow .dot { width: 20px; height: 20px; border-radius: 50%; background: var(--hd-lime); color: var(--hd-dark); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+  .hero h1 {
+    font-size: clamp(42px, 6vw, 76px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    margin: 20px 0 22px;
+  }
+  .hero h1 .hl {
+    background: var(--hd-lime);
+    padding: 0 10px 2px;
+    border-radius: 14px;
+    display: inline-block;
+    transform: rotate(-1.2deg);
+  }
+  .hero-sub {
+    font-size: 18px; line-height: 1.55; color: #50505e;
+    max-width: 520px; margin-bottom: 30px;
+    font-weight: 500;
+  }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn-lime {
+    background: var(--hd-lime); color: var(--hd-dark);
+    padding: 16px 26px; border-radius: 999px;
+    font-weight: 700; font-size: 15px;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: transform 120ms, box-shadow 200ms;
+  }
+  .btn-lime:hover { box-shadow: 0 10px 24px rgba(200,240,77,0.5); transform: translateY(-1px); }
+  .btn-lime:active { transform: scale(0.97); }
+  .btn-ghost {
+    color: var(--hd-dark);
+    padding: 16px 22px; border-radius: 999px;
+    font-weight: 600; font-size: 15px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+  }
+  .btn-ghost:hover { background: rgba(28,28,46,0.06); }
+  .hero-meta {
+    margin-top: 26px; display: flex; align-items: center; gap: 16px;
+    color: var(--hd-muted); font-size: 13px; font-weight: 500;
+  }
+  .stars { color: var(--hd-dark); letter-spacing: 2px; font-size: 14px; }
+
+  /* ---------- PHONE MOCKUP ---------- */
+  .phone-wrap { display: flex; justify-content: center; position: relative; }
+  .phone-wrap::before {
+    content: '';
+    position: absolute; inset: -40px -20px;
+    background: radial-gradient(ellipse at center, rgba(200,240,77,0.35), transparent 60%);
+    z-index: 0;
+  }
+  .phone {
+    width: 330px; height: 680px;
+    background: var(--hd-dark);
+    border-radius: 44px;
+    padding: 8px;
+    box-shadow: 0 40px 80px rgba(28,28,46,0.28), 0 0 0 2px rgba(255,255,255,0.06) inset;
+    position: relative; z-index: 1;
+    transform: rotate(-3deg);
+  }
+  .phone-inner {
+    width: 100%; height: 100%;
+    background: var(--hd-bg);
+    border-radius: 36px;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch {
+    position: absolute; top: 12px; left: 50%;
+    transform: translateX(-50%);
+    width: 96px; height: 26px;
+    background: #000; border-radius: 999px; z-index: 10;
+  }
+  .sbar {
+    padding: 16px 24px 8px;
+    display: flex; justify-content: space-between;
+    font-size: 12px; font-weight: 700; color: var(--hd-dark);
+  }
+  .phone-body { padding: 6px 18px 18px; }
+
+  /* Floating badges around phone */
+  .float-badge {
+    position: absolute;
+    background: #fff;
+    border-radius: 18px;
+    padding: 12px 16px;
+    box-shadow: 0 14px 30px rgba(28,28,46,0.12);
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 600;
+    z-index: 3;
+  }
+  .fb-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .fb-1 { top: 40px; left: -40px; transform: rotate(-6deg); }
+  .fb-2 { bottom: 120px; right: -50px; transform: rotate(5deg); }
+  .fb-3 { top: 260px; right: -70px; transform: rotate(3deg); }
+
+  /* ---------- SECTION COMMON ---------- */
+  .sec-head { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+  .sec-eye { display: inline-block; text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; font-weight: 700; color: var(--hd-muted); margin-bottom: 14px; }
+  .sec-eye::before { content: '● '; color: var(--hd-lime); }
+  .sec-title { font-size: clamp(32px, 4.5vw, 52px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+  .sec-title .hl-dark { background: var(--hd-dark); color: var(--hd-lime); padding: 0 12px 4px; border-radius: 12px; display: inline-block; }
+  .sec-sub { font-size: 17px; color: #50505e; margin-top: 18px; line-height: 1.55; }
+
+  /* ---------- PROOF STRIP ---------- */
+  .proof {
+    padding: 40px 0 20px;
+    border-top: 1px solid rgba(28,28,46,0.06);
+    border-bottom: 1px solid rgba(28,28,46,0.06);
+    background: var(--hd-surface);
+    margin-top: 40px;
+  }
+  .proof-row { display: flex; justify-content: space-between; align-items: center; gap: 30px; flex-wrap: wrap; }
+  .proof-stat { text-align: center; }
+  .proof-num { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .proof-lab { font-size: 12px; color: var(--hd-muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-top: 4px; }
+
+  /* ---------- FEATURES GRID ---------- */
+  .features { padding: 110px 0 60px; }
+  .fgrid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+  }
+  .fcard {
+    background: var(--hd-surface);
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+    transition: transform 200ms, box-shadow 200ms;
+    position: relative;
+    overflow: hidden;
+  }
+  .fcard:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,0,0,0.08); }
+  .fcard h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 18px 0 8px; }
+  .fcard p { font-size: 14px; color: #50505e; line-height: 1.55; margin: 0; font-weight: 500; }
+  .fcard--wide { grid-column: span 4; min-height: 320px; display: flex; flex-direction: column; }
+  .fcard--narrow { grid-column: span 2; min-height: 320px; display: flex; flex-direction: column; }
+  .fcard--half { grid-column: span 3; min-height: 300px; display: flex; flex-direction: column; }
+  .fcard--dark { background: var(--hd-dark); color: #fff; }
+  .fcard--dark p { color: rgba(255,255,255,0.65); }
+  .fcard--lime { background: var(--hd-lime); color: var(--hd-dark); }
+  .fcard--lime p { color: rgba(28,28,46,0.68); }
+
+  .fvisual { flex: 1; margin-top: 18px; display: flex; align-items: flex-end; justify-content: center; position: relative; }
+
+  @media (max-width: 900px) {
+    .fgrid { grid-template-columns: 1fr 1fr; }
+    .fcard--wide, .fcard--narrow, .fcard--half { grid-column: span 2; }
+    .hero-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- PILL / BADGE ---------- */
+  .tag-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(28,28,46,0.08); color: var(--hd-dark);
+    padding: 5px 11px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .fcard--dark .tag-pill { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9); }
+  .fcard--lime .tag-pill { background: rgba(28,28,46,0.12); color: var(--hd-dark); }
+
+  /* ---------- INLINE MINI UI ---------- */
+  .mini-card {
+    background: #fff; border-radius: 18px;
+    padding: 14px 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px;
+  }
+  .mi-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .money { font-variant-numeric: tabular-nums; font-weight: 700; letter-spacing: -0.01em; }
+  .money-inc { color: var(--hd-income-text); }
+  .money-exp { color: var(--hd-expense-text); }
+
+  /* budget bar */
+  .bbar { height: 8px; background: rgba(28,28,46,0.08); border-radius: 999px; overflow: hidden; display: flex; }
+  .bbar > div { height: 100%; }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps { padding: 80px 0 80px; background: var(--hd-dark); color: #fff; border-radius: 40px; margin: 80px 0; position: relative; }
+  .steps .sec-title { color: #fff; }
+  .steps .sec-title .hl-dark { background: var(--hd-lime); color: var(--hd-dark); }
+  .steps .sec-sub { color: rgba(255,255,255,0.65); }
+  .steps .sec-eye { color: rgba(255,255,255,0.55); }
+  .step-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+  .step {
+    background: rgba(255,255,255,0.04);
+    border-radius: 24px;
+    padding: 28px;
+    position: relative;
+  }
+  .step-num {
+    font-size: 48px; font-weight: 800;
+    color: var(--hd-lime);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .step h4 { font-size: 20px; font-weight: 700; margin: 12px 0 8px; }
+  .step p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.55; margin: 0; }
+  @media (max-width: 760px) { .step-row { grid-template-columns: 1fr; } }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .tess { padding: 90px 0; }
+  .tess-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .tess-card {
+    background: var(--hd-surface);
+    border-radius: 24px;
+    padding: 26px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+  }
+  .tess-card.alt { background: var(--hd-cream); }
+  .tess-quote { font-size: 16px; line-height: 1.55; color: var(--hd-dark); font-weight: 500; }
+  .tess-who { display: flex; align-items: center; gap: 12px; margin-top: 22px; }
+  .tess-av { width: 40px; height: 40px; border-radius: 50%; background: var(--hd-dark); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+  .tess-name { font-size: 13px; font-weight: 700; }
+  .tess-role { font-size: 12px; color: var(--hd-muted); }
+  @media (max-width: 760px) { .tess-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- PRICING ---------- */
+  .price { padding: 80px 0; }
+  .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 880px; margin: 0 auto; }
+  .price-card {
+    background: var(--hd-surface);
+    border-radius: 28px;
+    padding: 36px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  }
+  .price-card.pro {
+    background: var(--hd-dark); color: #fff;
+    position: relative; overflow: hidden;
+  }
+  .price-card.pro::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: var(--hd-lime); opacity: 0.18;
+    filter: blur(20px);
+  }
+  .price-name { font-size: 14px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--hd-muted); }
+  .price-card.pro .price-name { color: var(--hd-lime); }
+  .price-big { font-size: 52px; font-weight: 800; letter-spacing: -0.02em; margin: 12px 0 4px; font-variant-numeric: tabular-nums; }
+  .price-strike { font-size: 15px; color: var(--hd-muted); text-decoration: line-through; margin-left: 8px; font-weight: 500; }
+  .price-sub { font-size: 13px; color: var(--hd-muted); margin-bottom: 28px; }
+  .price-card.pro .price-sub { color: rgba(255,255,255,0.6); }
+  .price-list { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 12px; }
+  .price-list li { font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .price-check { color: var(--hd-income-text); font-weight: 800; flex-shrink: 0; }
+  .price-card.pro .price-check { color: var(--hd-lime); }
+  .price-btn { width: 100%; padding: 14px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+  .price-btn.lime { background: var(--hd-lime); color: var(--hd-dark); }
+  .price-btn.outline { background: transparent; color: var(--hd-dark); border: 1.5px solid var(--hd-dark); }
+  @media (max-width: 760px) { .price-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- FAQ ---------- */
+  .faq { padding: 80px 0; }
+  .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: var(--hd-surface);
+    border-radius: 20px;
+    padding: 22px 26px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.03);
+    cursor: pointer;
+  }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: 700; }
+  .faq-a { margin-top: 10px; font-size: 14px; color: #50505e; line-height: 1.6; display: none; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-chev { transform: rotate(45deg); }
+  .faq-chev { width: 28px; height: 28px; border-radius: 50%; background: var(--hd-dark); color: var(--hd-lime); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: transform 200ms; flex-shrink: 0; }
+
+  /* ---------- FINAL CTA ---------- */
+  .final {
+    margin: 60px 0 0;
+    background: var(--hd-lime);
+    border-radius: 40px;
+    padding: 80px 40px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .final h2 { font-size: clamp(36px, 5vw, 64px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.02; margin: 0 0 18px; }
+  .final p { font-size: 17px; color: rgba(28,28,46,0.75); max-width: 500px; margin: 0 auto 30px; }
+  .final .btn-lime { background: var(--hd-dark); color: var(--hd-lime); }
+  .final .btn-lime:hover { box-shadow: 0 10px 28px rgba(28,28,46,0.3); }
+
+  /* ---------- FOOTER ---------- */
+  footer { padding: 60px 0 40px; color: var(--hd-muted); }
+  .foot-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .foot-links { display: flex; gap: 22px; font-size: 13px; }
+  .foot-links a:hover { color: var(--hd-dark); }
+
+  /* Utility */
+  .tnum { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="brand">
+      <img src="assets/logo.jpg" alt="HitungDuit" class="brand-mark">
+      HitungDuit
+    </a>
+    <div class="nav-links">
+      <a href="#features" data-i18n="nav_features">Features</a>
+      <a href="#how" data-i18n="nav_how">How it works</a>
+      <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+    </div>
+    <div class="nav-end">
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu(event)">
+          <span id="lang-flag">🇮🇩</span><span id="lang-label">ID</span>
+        </button>
+        <div class="lang-menu" id="lang-menu">
+          <button onclick="setLang('id', event)" data-lang="id">🇮🇩 &nbsp;Indonesia</button>
+          <button onclick="setLang('en', event)" data-lang="en">🇬🇧 &nbsp;English</button>
+          <button onclick="setLang('ja', event)" data-lang="ja">🇯🇵 &nbsp;日本語</button>
+          <button onclick="setLang('es', event)" data-lang="es">🇪🇸 &nbsp;Español</button>
+          <button onclick="setLang('zh', event)" data-lang="zh">🇨🇳 &nbsp;中文</button>
+        </div>
+      </div>
+      <a href="#download" class="nav-cta" data-i18n="nav_download">Download</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot">🇮🇩</span><span data-i18n="hero_eyebrow">iOS-first, dibuat untuk Indonesia</span></span>
+        <h1 data-i18n-html="hero_h1">Budget harian yang <span class="hl">simpel,</span> cepat, dan jujur.</h1>
+        <p class="hero-sub" data-i18n="hero_sub">HitungDuit bantu kamu atur pemasukan, pengeluaran, dan budget bulanan — tanpa akses ke rekening bank, tanpa langganan ribet. Bayar sekali, pakai selamanya.</p>
+        <div class="hero-ctas">
+          <a href="#download" class="btn-lime">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.5a4.44 4.44 0 012.12-3.73 4.55 4.55 0 00-3.58-1.95c-1.52-.16-2.97.89-3.75.89-.79 0-1.97-.87-3.25-.85a4.78 4.78 0 00-4.02 2.45c-1.72 2.98-.44 7.37 1.23 9.78.82 1.18 1.79 2.5 3.07 2.45 1.24-.05 1.7-.79 3.2-.79 1.48 0 1.9.79 3.21.76 1.33-.02 2.17-1.19 2.98-2.38a10.47 10.47 0 001.36-2.78 4.3 4.3 0 01-2.57-3.85zM14.66 5.16a4.3 4.3 0 001-3.16 4.42 4.42 0 00-2.86 1.48 4.07 4.07 0 00-1.02 3.04 3.64 3.64 0 002.88-1.36z"/></svg>
+            <span data-i18n="hero_cta_dl">Download on App Store</span>
+          </a>
+          <a href="#how" class="btn-ghost" data-i18n="hero_cta_how">See how it works →</a>
+        </div>
+        <div class="hero-meta">
+          <span class="stars">★★★★★</span>
+          <span data-i18n="hero_reviews">4.9 — 2,300+ reviews</span>
+          <span style="opacity:0.5">·</span>
+          <span data-i18n="hero_price">Free · One-time Pro</span>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="float-badge fb-1">
+          <div class="fb-icon" style="background:var(--hd-income-tint); color:var(--hd-income-text);">↗</div>
+          <div>
+            <div style="font-size:11px; color:var(--hd-muted); font-weight:600;" data-i18n="badge_income">INCOME · Today</div>
+            <div class="money money-inc">+Rp 6,200,000</div>
+          </div>
+        </div>
+        <div class="float-badge fb-3">
+          <div class="fb-icon" style="background:var(--hd-lime); color:var(--hd-dark);">✓</div>
+          <div>
+            <div style="font-size:11px; color:var(--hd-muted); font-weight:600;" data-i18n="badge_budget">BUDGET</div>
+            <div style="font-weight:700;" data-i18n="badge_on_track">On track 🎯</div>
+          </div>
+        </div>
+        <div class="float-badge fb-2">
+          <div class="fb-icon" style="background:var(--hd-dark); color:#fff;">🍜</div>
+          <div>
+            <div style="font-size:11px; color:var(--hd-muted); font-weight:600;" data-i18n="badge_food">FOOD</div>
+            <div class="money money-exp">−Rp 35,000</div>
+          </div>
+        </div>
+
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="notch"></div>
+            <div class="sbar">
+              <span>9:41</span>
+              <span style="display:flex; gap:5px; align-items:center;">
+                <span style="font-size:10px;">●●●●</span>
+                <span style="font-size:10px; opacity:0.75;">5G</span>
+              </span>
+            </div>
+            <div class="phone-body">
+              <!-- Period pill -->
+              <div style="display:flex; align-items:center; gap:8px; margin:4px 0 14px;">
+                <div style="flex:1; background:#fff; border-radius:999px; padding:8px 14px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                  <span style="color:var(--hd-muted); font-size:16px;">‹</span>
+                  <span style="font-weight:700; font-size:14px;">Nov 2026</span>
+                  <span style="color:var(--hd-muted); font-size:16px;">›</span>
+                </div>
+                <div style="background:var(--hd-lime); color:var(--hd-dark); padding:8px 14px; border-radius:999px; font-weight:700; font-size:12px;">Today</div>
+              </div>
+
+              <!-- Dark balance card -->
+              <div style="background:var(--hd-dark); color:#fff; border-radius:22px; padding:18px; box-shadow:0 10px 24px rgba(28,28,46,0.25);">
+                <div style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.55);">Total balance</div>
+                <div style="font-size:28px; font-weight:800; letter-spacing:-0.01em; margin-top:4px; font-variant-numeric:tabular-nums;">Rp 4,820,000</div>
+                <div style="display:flex; gap:6px; margin-top:10px;">
+                  <span style="background:var(--hd-income-tint); color:var(--hd-income-text); padding:4px 9px; border-radius:999px; font-size:10px; font-weight:700;">↗ +12%</span>
+                  <span style="background:rgba(255,255,255,0.1); color:#fff; padding:4px 9px; border-radius:999px; font-size:10px; font-weight:600;">This month</span>
+                </div>
+                <div style="margin-top:14px; height:6px; background:rgba(255,255,255,0.1); border-radius:999px; overflow:hidden; display:flex;">
+                  <div style="width:72%; background:var(--hd-lime);"></div>
+                  <div style="width:18%; background:var(--hd-expense-tint);"></div>
+                </div>
+              </div>
+
+              <!-- Stat tiles -->
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;">
+                <div style="background:#fff; border-radius:16px; padding:12px; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                  <div style="font-size:9px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--hd-muted);">Income</div>
+                  <div style="font-size:16px; font-weight:800; margin-top:2px; font-variant-numeric:tabular-nums;">Rp 6.2M</div>
+                </div>
+                <div style="background:#fff; border-radius:16px; padding:12px; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                  <div style="font-size:9px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--hd-muted);">Expense</div>
+                  <div style="font-size:16px; font-weight:800; margin-top:2px; font-variant-numeric:tabular-nums;">Rp 1.4M</div>
+                </div>
+              </div>
+
+              <!-- Recent -->
+              <div style="display:flex; justify-content:space-between; align-items:baseline; margin:16px 2px 8px;">
+                <div style="font-size:14px; font-weight:800;">Recent activity</div>
+                <div style="font-size:11px; color:var(--hd-muted);">See all</div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div style="background:#fff; border-radius:14px; padding:10px 12px; display:flex; align-items:center; gap:10px; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                  <div style="width:32px; height:32px; border-radius:50%; background:var(--hd-dark); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px;">🛒</div>
+                  <div style="flex:1;">
+                    <div style="font-size:12px; font-weight:700;">Alfamart</div>
+                    <div style="font-size:10px; color:var(--hd-muted);">Groceries · 14:32</div>
+                  </div>
+                  <div class="money money-exp" style="font-size:12px;">−Rp 48,500</div>
+                </div>
+                <div style="background:#fff; border-radius:14px; padding:10px 12px; display:flex; align-items:center; gap:10px; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                  <div style="width:32px; height:32px; border-radius:50%; background:var(--hd-income-tint); color:var(--hd-income-text); display:flex; align-items:center; justify-content:center; font-size:14px;">💼</div>
+                  <div style="flex:1;">
+                    <div style="font-size:12px; font-weight:700;">Gaji bulanan</div>
+                    <div style="font-size:10px; color:var(--hd-muted);">Salary · 09:00</div>
+                  </div>
+                  <div class="money money-inc" style="font-size:12px;">+Rp 6,200,000</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<section class="proof">
+  <div class="wrap proof-row">
+    <div class="proof-stat"><div class="proof-num">50K+</div><div class="proof-lab" data-i18n="proof_users">Active users</div></div>
+    <div class="proof-stat"><div class="proof-num">4.9★</div><div class="proof-lab" data-i18n="proof_rating">App Store rating</div></div>
+    <div class="proof-stat"><div class="proof-num">2.1M+</div><div class="proof-lab" data-i18n="proof_tx">Transactions logged</div></div>
+    <div class="proof-stat"><div class="proof-num">Rp 79k</div><div class="proof-lab" data-i18n="proof_pro">One-time Pro</div></div>
+    <div class="proof-stat"><div class="proof-num">0</div><div class="proof-lab" data-i18n="proof_bank">Bank access needed</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eye" data-i18n="feat_eye">Fitur</div>
+      <div class="sec-title" data-i18n-html="feat_title">Everything you need to <span class="hl-dark">count money</span> — nothing you don't.</div>
+      <div class="sec-sub" data-i18n="feat_sub">Built iOS-first with the home widget, Control Center shortcut, and Indonesian-friendly UX — all in one app.</div>
+    </div>
+
+    <div class="fgrid">
+      <!-- Card 1: Quick add (wide, lime) -->
+      <div class="fcard fcard--wide fcard--lime">
+        <span class="tag-pill" data-i18n="f1_pill">Hero feature</span>
+        <h3 data-i18n="f1_h3">Log a transaction in 2 seconds flat.</h3>
+        <p data-i18n="f1_p">Swipe down from lock screen, tap the Control Center tile, type the amount, done. No more "I'll log it later" excuses.</p>
+        <div class="fvisual">
+          <!-- Mini Control Center tile mockup -->
+          <div style="background:rgba(28,28,46,0.9); backdrop-filter:blur(10px); border-radius:24px; padding:16px; width:220px; color:#fff; position:relative;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+              <div style="width:32px; height:32px; border-radius:10px; background:var(--hd-lime); color:var(--hd-dark); display:flex; align-items:center; justify-content:center; font-weight:800;">+</div>
+              <div style="font-size:12px; font-weight:700;">Quick Add</div>
+            </div>
+            <div style="font-size:24px; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-0.01em;">Rp 25,000</div>
+            <div style="font-size:10px; color:rgba(255,255,255,0.5); margin-top:4px;">Food · Default wallet</div>
+            <div style="margin-top:12px; background:var(--hd-lime); color:var(--hd-dark); text-align:center; padding:8px; border-radius:10px; font-size:12px; font-weight:700;">Save</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Bahasa (narrow, dark) -->
+      <div class="fcard fcard--narrow fcard--dark">
+        <span class="tag-pill" data-i18n="f2_pill">🇮🇩 Bahasa + English</span>
+        <h3 data-i18n="f2_h3">Bahasa Indonesia, natively.</h3>
+        <p data-i18n="f2_p">Rp formatting, local categories, Indonesian copy. Bukan terjemahan — benar-benar dibangun untuk kamu.</p>
+        <div class="fvisual">
+          <div style="display:flex; flex-direction:column; gap:6px; width:100%;">
+            <div style="background:rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px; font-size:12px; display:flex; justify-content:space-between;"><span>Pemasukan</span><span class="tnum" style="color:var(--hd-lime); font-weight:700;">Rp 6,2jt</span></div>
+            <div style="background:rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px; font-size:12px; display:flex; justify-content:space-between;"><span>Pengeluaran</span><span class="tnum" style="font-weight:700;">Rp 1,4jt</span></div>
+            <div style="background:rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px; font-size:12px; display:flex; justify-content:space-between;"><span>Sisa</span><span class="tnum" style="font-weight:700;">Rp 4,8jt</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Budget thresholds (half) -->
+      <div class="fcard fcard--half">
+        <span class="tag-pill" data-i18n="f3_pill">Budget traffic lights</span>
+        <h3 data-i18n="f3_h3">Green, amber, red — at a glance.</h3>
+        <p data-i18n="f3_p">Every budget card shows where you stand instantly. No math, no mental gymnastics.</p>
+        <div class="fvisual">
+          <div style="display:flex; flex-direction:column; gap:8px; width:100%;">
+            <div class="mini-card" style="padding:10px 14px;">
+              <div class="mi-icon" style="background:var(--hd-income-tint); color:var(--hd-income-text);">🍜</div>
+              <div style="flex:1;">
+                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px;"><span>Food</span><span class="tnum">42% used</span></div>
+                <div class="bbar"><div style="width:42%; background:var(--hd-income-text);"></div></div>
+              </div>
+            </div>
+            <div class="mini-card" style="padding:10px 14px;">
+              <div class="mi-icon" style="background:#FFF4DB; color:#B8761B;">⚡</div>
+              <div style="flex:1;">
+                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px;"><span>Bills</span><span class="tnum">78% used</span></div>
+                <div class="bbar"><div style="width:78%; background:#D9901E;"></div></div>
+              </div>
+            </div>
+            <div class="mini-card" style="padding:10px 14px;">
+              <div class="mi-icon" style="background:var(--hd-expense-tint); color:var(--hd-expense-text);">🎁</div>
+              <div style="flex:1;">
+                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px;"><span>Gifts</span><span class="tnum">103% — over</span></div>
+                <div class="bbar"><div style="width:100%; background:var(--hd-expense-text);"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Trip funds (half) -->
+      <div class="fcard fcard--half">
+        <span class="tag-pill" data-i18n="f4_pill">Trip & event funds</span>
+        <h3 data-i18n="f4_h3">Envelopes for Bali, weddings, whatever.</h3>
+        <p data-i18n="f4_p">One-off funds that live alongside monthly budgets. Close them when the trip's done.</p>
+        <div class="fvisual">
+          <div style="display:flex; gap:10px; width:100%;">
+            <div style="flex:1; background:var(--hd-sky); border-radius:16px; padding:14px; color:var(--hd-dark);">
+              <div style="font-size:18px;">🏝</div>
+              <div style="font-size:12px; font-weight:700; margin-top:6px;">Bali Trip</div>
+              <div class="tnum" style="font-size:13px; font-weight:800; margin-top:2px;">Rp 3.2M / 5M</div>
+              <div style="margin-top:8px; height:4px; background:rgba(28,28,46,0.15); border-radius:999px; overflow:hidden;"><div style="width:64%; height:100%; background:var(--hd-dark);"></div></div>
+            </div>
+            <div style="flex:1; background:var(--hd-blush); border-radius:16px; padding:14px; color:var(--hd-dark);">
+              <div style="font-size:18px;">💍</div>
+              <div style="font-size:12px; font-weight:700; margin-top:6px;">Wedding</div>
+              <div class="tnum" style="font-size:13px; font-weight:800; margin-top:2px;">Rp 18M / 40M</div>
+              <div style="margin-top:8px; height:4px; background:rgba(28,28,46,0.15); border-radius:999px; overflow:hidden;"><div style="width:45%; height:100%; background:var(--hd-dark);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Widget (narrow) -->
+      <div class="fcard fcard--narrow">
+        <span class="tag-pill" data-i18n="f5_pill">Home widget</span>
+        <h3 data-i18n="f5_h3">Today's spend on your home screen.</h3>
+        <p data-i18n="f5_p">Medium + small widgets for lock screen, home screen, and StandBy.</p>
+        <div class="fvisual">
+          <div style="background:var(--hd-dark); color:#fff; border-radius:22px; padding:16px; width:100%;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="font-size:10px; font-weight:700; color:rgba(255,255,255,0.55); text-transform:uppercase; letter-spacing:0.08em;">Today</div>
+              <img src="assets/logo.jpg" alt="HitungDuit" style="width:20px; height:20px; border-radius:6px; object-fit:cover; display:block;">
+            </div>
+            <div class="tnum" style="font-size:22px; font-weight:800; margin-top:8px;">Rp 127k</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55); margin-top:2px;">of Rp 200k budget</div>
+            <div style="margin-top:10px; height:6px; background:rgba(255,255,255,0.1); border-radius:999px; overflow:hidden;"><div style="width:63%; height:100%; background:var(--hd-lime);"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Privacy (wide) -->
+      <div class="fcard fcard--wide">
+        <span class="tag-pill" data-i18n="f6_pill">Private by default</span>
+        <h3 data-i18n="f6_h3">Your money stays on your phone. Period.</h3>
+        <p data-i18n="f6_p">No bank logins, no screen-scraping, no "we value your privacy" theater. HitungDuit runs fully on-device with optional iCloud backup — encrypted end-to-end.</p>
+        <div class="fvisual">
+          <div style="display:flex; gap:12px; align-items:center; width:100%; justify-content:center;">
+            <div style="background:#fff; border-radius:16px; padding:14px 18px; box-shadow:0 4px 14px rgba(0,0,0,0.05); display:flex; align-items:center; gap:10px;">
+              <div style="width:28px; height:28px; border-radius:8px; background:var(--hd-lime); color:var(--hd-dark); display:flex; align-items:center; justify-content:center;">🔒</div>
+              <div style="font-size:13px; font-weight:700;">On-device only</div>
+            </div>
+            <div style="background:#fff; border-radius:16px; padding:14px 18px; box-shadow:0 4px 14px rgba(0,0,0,0.05); display:flex; align-items:center; gap:10px;">
+              <div style="width:28px; height:28px; border-radius:8px; background:var(--hd-dark); color:#fff; display:flex; align-items:center; justify-content:center;">☁</div>
+              <div style="font-size:13px; font-weight:700;">E2E iCloud sync</div>
+            </div>
+            <div style="background:#fff; border-radius:16px; padding:14px 18px; box-shadow:0 4px 14px rgba(0,0,0,0.05); display:flex; align-items:center; gap:10px;">
+              <div style="width:28px; height:28px; border-radius:8px; background:var(--hd-income-tint); color:var(--hd-income-text); display:flex; align-items:center; justify-content:center;">✕</div>
+              <div style="font-size:13px; font-weight:700;">Zero ads, ever</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="wrap" id="how">
+  <div class="steps">
+    <div class="sec-head">
+      <div class="sec-eye" data-i18n="how_eye">How it works</div>
+      <div class="sec-title" style="color:#fff;" data-i18n-html="how_title">Three steps. <span class="hl-dark">That's it.</span></div>
+    </div>
+    <div class="wrap step-row">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4 data-i18n="s1_h4">Set your monthly budget</h4>
+        <p data-i18n="s1_p">Pick categories that matter — Food, Transit, Bills — and assign a rupiah cap to each. Recurring templates do the heavy lifting every month.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4 data-i18n="s2_h4">Log as you spend</h4>
+        <p data-i18n="s2_p">Widget, Control Center, or in-app — two taps and it's in. No receipt scanning, no bank linking, no friction.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4 data-i18n="s3_h4">Stay on track</h4>
+        <p data-i18n="s3_p">Green-amber-red cards tell you where you stand. Swipe months, jump to today, or scroll back to see where it all went.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="tess">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eye" data-i18n="tess_eye">Testimonials</div>
+      <div class="sec-title" data-i18n="tess_title">What early users are saying.</div>
+    </div>
+    <div class="tess-grid">
+      <div class="tess-card">
+        <div class="stars">★★★★★</div>
+        <div class="tess-quote" style="margin-top:14px;" data-i18n="t1_q">"Finally a budget app that uses Rupiah properly and isn't trying to connect to my bank. The Control Center shortcut is genius — I log every gojek instantly."</div>
+        <div class="tess-who">
+          <div class="tess-av" style="background:var(--hd-lime); color:var(--hd-dark);">D</div>
+          <div><div class="tess-name">Dimas R.</div><div class="tess-role" data-i18n="t1_role">Jakarta · Designer</div></div>
+        </div>
+      </div>
+      <div class="tess-card alt">
+        <div class="stars">★★★★★</div>
+        <div class="tess-quote" style="margin-top:14px;" data-i18n="t2_q">"Aplikasi budget paling simpel yang pernah saya coba. Satu kali bayar, nggak ada langganan tiap bulan. Warna hijau-kuning-merah-nya langsung kelihatan budget-nya gimana."</div>
+        <div class="tess-who">
+          <div class="tess-av" style="background:var(--hd-dark);">S</div>
+          <div><div class="tess-name">Sari P.</div><div class="tess-role" data-i18n="t2_role">Surabaya · Freelancer</div></div>
+        </div>
+      </div>
+      <div class="tess-card">
+        <div class="stars">★★★★★</div>
+        <div class="tess-quote" style="margin-top:14px;" data-i18n="t3_q">"Used YNAB for years, switched over because subscription fatigue is real. HitungDuit does 90% of what I needed, beautifully, for the price of one coffee."</div>
+        <div class="tess-who">
+          <div class="tess-av" style="background:var(--hd-blush); color:var(--hd-dark);">A</div>
+          <div><div class="tess-name">Alya K.</div><div class="tess-role" data-i18n="t3_role">Bandung · PM</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="price" id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eye" data-i18n="price_eye">Pricing</div>
+      <div class="sec-title" data-i18n-html="price_title">Bayar sekali. <span class="hl-dark">Pakai selamanya.</span></div>
+      <div class="sec-sub" data-i18n="price_sub">No subscriptions. No "lifetime deal" gimmicks. Just pay once and you own it.</div>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-name" data-i18n="free_name">Free</div>
+        <div class="price-big">Rp 0<span class="price-strike"></span></div>
+        <div class="price-sub" data-i18n="free_sub">Forever. Satu wallet, unlimited transactions.</div>
+        <ul class="price-list">
+          <li><span class="price-check">✓</span> <span data-i18n="free_f1">Unlimited transactions</span></li>
+          <li><span class="price-check">✓</span> <span data-i18n="free_f2">1 wallet, 5 categories</span></li>
+          <li><span class="price-check">✓</span> <span data-i18n="free_f3">Monthly budget + summary</span></li>
+          <li><span class="price-check">✓</span> <span data-i18n="free_f4">Bahasa Indonesia + English</span></li>
+        </ul>
+        <button class="price-btn outline" data-i18n="free_btn">Get HitungDuit Free</button>
+      </div>
+      <div class="price-card pro">
+        <div class="price-name" data-i18n="pro_name">Pro Unlock</div>
+        <div class="price-big">Rp 79k<span class="price-strike" style="color:rgba(255,255,255,0.4);">Rp 149k</span></div>
+        <div class="price-sub" data-i18n="pro_sub">One-time. Launch price — ends 31 May 2026.</div>
+        <ul class="price-list">
+          <li><span class="price-check">✓</span> <span data-i18n="pro_f1">Everything in Free</span></li>
+          <li><span class="price-check">✓</span> <span data-i18n="pro_f2">Unlimited wallets & categories</span></li>
+          <li><span class="price-check">✓</span> <span data-i18n="pro_f3">Widgets + Control Center quick-add</span></li>
+          <li><span class="price-check">✓</span> <span data-i18n="pro_f4">Trip & event funds</span></li>
+          <li><span class="price-check">✓</span> <span data-i18n="pro_f5">Recurring budget templates</span></li>
+          <li><span class="price-check">✓</span> <span data-i18n="pro_f6">iCloud sync (E2E encrypted)</span></li>
+          <li><span class="price-check">✓</span> <span data-i18n="pro_f7">CSV export</span></li>
+        </ul>
+        <button class="price-btn lime" data-i18n="pro_btn">Unlock Pro — Rp 79,000</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eye" data-i18n="faq_eye">FAQ</div>
+      <div class="sec-title" data-i18n="faq_title">Questions, answered.</div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-q"><span data-i18n="faq1_q">Does HitungDuit connect to my bank?</span> <span class="faq-chev">+</span></div>
+        <div class="faq-a" data-i18n="faq1_a">No — and that's by design. Indonesian banks don't offer clean developer APIs, and screen-scraping is fragile and risky. You log transactions manually (2 taps via widget), so your money data never leaves your phone.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span data-i18n="faq2_q">Is it really one-time payment?</span> <span class="faq-chev">+</span></div>
+        <div class="faq-a" data-i18n="faq2_a">Yes. Pay Rp 79,000 once and Pro is yours forever — on every iOS device signed in with your Apple ID. No renewal, no surprise charges, no feature held hostage by a subscription.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span data-i18n="faq3_q">Do you support Android?</span> <span class="faq-chev">+</span></div>
+        <div class="faq-a" data-i18n="faq3_a">Not yet. HitungDuit is built iOS-first to take full advantage of widgets, Control Center, StandBy, and SwiftUI polish. Android is on the roadmap for 2027.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span data-i18n="faq4_q">Can I export my data?</span> <span class="faq-chev">+</span></div>
+        <div class="faq-a" data-i18n="faq4_a">Absolutely. Pro users can export full transaction history as CSV at any time. Your data is yours — if you ever leave, you walk out with everything.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span data-i18n="faq5_q">What languages are supported?</span> <span class="faq-chev">+</span></div>
+        <div class="faq-a" data-i18n="faq5_a">Bahasa Indonesia and English at launch. Every label, tooltip, and copy string is written natively in both — not machine-translated. More languages coming based on user votes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="wrap" id="download">
+  <div class="final">
+    <h2 data-i18n-html="final_h2">Mulai hitung duit kamu.<br>Hari ini.</h2>
+    <p data-i18n="final_p">Free forever. Upgrade to Pro when you're ready. Works on iPhone and iPad.</p>
+    <a href="#" class="btn-lime">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.5a4.44 4.44 0 012.12-3.73 4.55 4.55 0 00-3.58-1.95c-1.52-.16-2.97.89-3.75.89-.79 0-1.97-.87-3.25-.85a4.78 4.78 0 00-4.02 2.45c-1.72 2.98-.44 7.37 1.23 9.78.82 1.18 1.79 2.5 3.07 2.45 1.24-.05 1.7-.79 3.2-.79 1.48 0 1.9.79 3.21.76 1.33-.02 2.17-1.19 2.98-2.38a10.47 10.47 0 001.36-2.78 4.3 4.3 0 01-2.57-3.85zM14.66 5.16a4.3 4.3 0 001-3.16 4.42 4.42 0 00-2.86 1.48 4.07 4.07 0 00-1.02 3.04 3.64 3.64 0 002.88-1.36z"/></svg>
+      <span data-i18n="final_btn">Download on the App Store</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-row">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img src="assets/logo.jpg" alt="HitungDuit" style="width:28px; height:28px; border-radius:8px; object-fit:cover; display:block;">
+      <span style="color:var(--hd-dark); font-weight:700;">HitungDuit</span>
+      <span style="font-size:13px;">© 2026</span>
+    </div>
+    <div class="foot-links">
+      <a href="#" data-i18n="foot_privacy">Privacy</a>
+      <a href="#" data-i18n="foot_terms">Terms</a>
+      <a href="#" data-i18n="foot_support">Support</a>
+      <a href="#" data-i18n="foot_twitter">Twitter</a>
+      <a href="#" data-i18n="foot_ig">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // FAQ toggle
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => item.classList.toggle('open'));
+  });
+
+  // ── I18N ──────────────────────────────────────────────────────────────────
+  const LANG_META = {
+    id: { flag: '🇮🇩', label: 'ID' },
+    en: { flag: '🇬🇧', label: 'EN' },
+    ja: { flag: '🇯🇵', label: 'JA' },
+    es: { flag: '🇪🇸', label: 'ES' },
+    zh: { flag: '🇨🇳', label: 'ZH' },
+  };
+
+  const T = {
+    en: {
+      page_title: 'HitungDuit — Simple & honest daily budget',
+      nav_features: 'Features', nav_how: 'How it works', nav_pricing: 'Pricing', nav_faq: 'FAQ', nav_download: 'Download',
+      hero_eyebrow: 'iOS-first, built for Indonesia',
+      hero_h1: 'Simple, <span class="hl">fast,</span> and honest daily budgeting.',
+      hero_sub: 'HitungDuit helps you track income, expenses, and monthly budgets — no bank access required, no messy subscriptions. Pay once, use forever.',
+      hero_cta_dl: 'Download on App Store', hero_cta_how: 'See how it works →',
+      hero_reviews: '4.9 — 2,300+ reviews', hero_price: 'Free · One-time Pro',
+      badge_income: 'INCOME · Today', badge_budget: 'BUDGET', badge_on_track: 'On track 🎯', badge_food: 'FOOD',
+      proof_users: 'Active users', proof_rating: 'App Store rating', proof_tx: 'Transactions logged', proof_pro: 'One-time Pro', proof_bank: 'Bank access needed',
+      feat_eye: 'Features',
+      feat_title: 'Everything you need to <span class="hl-dark">count money</span> — nothing you don\'t.',
+      feat_sub: 'Built iOS-first with the home widget, Control Center shortcut, and Indonesian-friendly UX — all in one app.',
+      f1_pill: 'Hero feature', f1_h3: 'Log a transaction in 2 seconds flat.', f1_p: 'Swipe down from lock screen, tap the Control Center tile, type the amount, done. No more "I\'ll log it later" excuses.',
+      f2_pill: '🇮🇩 Bahasa + English', f2_h3: 'Bahasa Indonesia, natively.', f2_p: 'Rp formatting, local categories, Indonesian copy. Not a translation — truly built for you.',
+      f3_pill: 'Budget traffic lights', f3_h3: 'Green, amber, red — at a glance.', f3_p: 'Every budget card shows where you stand instantly. No math, no mental gymnastics.',
+      f4_pill: 'Trip & event funds', f4_h3: 'Envelopes for Bali, weddings, whatever.', f4_p: 'One-off funds that live alongside monthly budgets. Close them when the trip\'s done.',
+      f5_pill: 'Home widget', f5_h3: 'Today\'s spend on your home screen.', f5_p: 'Medium + small widgets for lock screen, home screen, and StandBy.',
+      f6_pill: 'Private by default', f6_h3: 'Your money stays on your phone. Period.', f6_p: 'No bank logins, no screen-scraping, no "we value your privacy" theater. HitungDuit runs fully on-device with optional iCloud backup — encrypted end-to-end.',
+      how_eye: 'How it works',
+      how_title: 'Three steps. <span class="hl-dark">That\'s it.</span>',
+      s1_h4: 'Set your monthly budget', s1_p: 'Pick categories that matter — Food, Transit, Bills — and assign a rupiah cap to each. Recurring templates do the heavy lifting every month.',
+      s2_h4: 'Log as you spend', s2_p: 'Widget, Control Center, or in-app — two taps and it\'s in. No receipt scanning, no bank linking, no friction.',
+      s3_h4: 'Stay on track', s3_p: 'Green-amber-red cards tell you where you stand. Swipe months, jump to today, or scroll back to see where it all went.',
+      tess_eye: 'Testimonials', tess_title: 'What early users are saying.',
+      t1_q: '"Finally a budget app that uses Rupiah properly and isn\'t trying to connect to my bank. The Control Center shortcut is genius — I log every gojek instantly."', t1_role: 'Jakarta · Designer',
+      t2_q: '"The simplest budget app I\'ve ever tried. Pay once, no monthly subscriptions. The green-yellow-red colors instantly show how your budget is doing."', t2_role: 'Surabaya · Freelancer',
+      t3_q: '"Used YNAB for years, switched over because subscription fatigue is real. HitungDuit does 90% of what I needed, beautifully, for the price of one coffee."', t3_role: 'Bandung · PM',
+      price_eye: 'Pricing',
+      price_title: 'Pay once. <span class="hl-dark">Own it forever.</span>',
+      price_sub: 'No subscriptions. No "lifetime deal" gimmicks. Just pay once and you own it.',
+      free_name: 'Free', free_sub: 'Forever. One wallet, unlimited transactions.',
+      free_f1: 'Unlimited transactions', free_f2: '1 wallet, 5 categories', free_f3: 'Monthly budget + summary', free_f4: 'Bahasa Indonesia + English',
+      free_btn: 'Get HitungDuit Free',
+      pro_name: 'Pro Unlock', pro_sub: 'One-time. Launch price — ends 31 May 2026.',
+      pro_f1: 'Everything in Free', pro_f2: 'Unlimited wallets & categories', pro_f3: 'Widgets + Control Center quick-add', pro_f4: 'Trip & event funds', pro_f5: 'Recurring budget templates', pro_f6: 'iCloud sync (E2E encrypted)', pro_f7: 'CSV export',
+      pro_btn: 'Unlock Pro — Rp 79,000',
+      faq_eye: 'FAQ', faq_title: 'Questions, answered.',
+      faq1_q: 'Does HitungDuit connect to my bank?', faq1_a: 'No — and that\'s by design. Indonesian banks don\'t offer clean developer APIs, and screen-scraping is fragile and risky. You log transactions manually (2 taps via widget), so your money data never leaves your phone.',
+      faq2_q: 'Is it really one-time payment?', faq2_a: 'Yes. Pay Rp 79,000 once and Pro is yours forever — on every iOS device signed in with your Apple ID. No renewal, no surprise charges, no feature held hostage by a subscription.',
+      faq3_q: 'Do you support Android?', faq3_a: 'Not yet. HitungDuit is built iOS-first to take full advantage of widgets, Control Center, StandBy, and SwiftUI polish. Android is on the roadmap for 2027.',
+      faq4_q: 'Can I export my data?', faq4_a: 'Absolutely. Pro users can export full transaction history as CSV at any time. Your data is yours — if you ever leave, you walk out with everything.',
+      faq5_q: 'What languages are supported?', faq5_a: 'Bahasa Indonesia and English at launch. Every label, tooltip, and copy string is written natively in both — not machine-translated. More languages coming based on user votes.',
+      final_h2: 'Start tracking your money.<br>Today.',
+      final_p: 'Free forever. Upgrade to Pro when you\'re ready. Works on iPhone and iPad.',
+      final_btn: 'Download on the App Store',
+      foot_privacy: 'Privacy', foot_terms: 'Terms', foot_support: 'Support', foot_twitter: 'Twitter', foot_ig: 'Instagram',
+    },
+    id: {
+      page_title: 'HitungDuit — Budget harian yang simpel & jujur',
+      nav_features: 'Fitur', nav_how: 'Cara kerja', nav_pricing: 'Harga', nav_faq: 'FAQ', nav_download: 'Unduh',
+      hero_eyebrow: 'iOS-first, dibuat untuk Indonesia',
+      hero_h1: 'Budget harian yang <span class="hl">simpel,</span> cepat, dan jujur.',
+      hero_sub: 'HitungDuit bantu kamu atur pemasukan, pengeluaran, dan budget bulanan — tanpa akses ke rekening bank, tanpa langganan ribet. Bayar sekali, pakai selamanya.',
+      hero_cta_dl: 'Download di App Store', hero_cta_how: 'Lihat cara kerjanya →',
+      hero_reviews: '4.9 — 2.300+ ulasan', hero_price: 'Gratis · Bayar Sekali Pro',
+      badge_income: 'PEMASUKAN · Hari ini', badge_budget: 'BUDGET', badge_on_track: 'Sesuai target 🎯', badge_food: 'MAKANAN',
+      proof_users: 'Pengguna aktif', proof_rating: 'Rating App Store', proof_tx: 'Transaksi tercatat', proof_pro: 'Pro bayar sekali', proof_bank: 'Akses bank diperlukan',
+      feat_eye: 'Fitur',
+      feat_title: 'Semua yang kamu butuhkan untuk <span class="hl-dark">hitung duit</span> — tidak lebih.',
+      feat_sub: 'Dibangun iOS-first dengan widget home, shortcut Control Center, dan UX ramah Indonesia — semua dalam satu aplikasi.',
+      f1_pill: 'Fitur unggulan', f1_h3: 'Catat transaksi dalam 2 detik.', f1_p: 'Geser dari lock screen, ketuk tile Control Center, ketik jumlahnya, selesai. Tidak ada lagi alasan "nanti aja dicatatnya".',
+      f2_pill: '🇮🇩 Bahasa + English', f2_h3: 'Bahasa Indonesia, asli.', f2_p: 'Format Rp, kategori lokal, teks Bahasa Indonesia. Bukan terjemahan — benar-benar dibangun untuk kamu.',
+      f3_pill: 'Lampu lalu lintas budget', f3_h3: 'Hijau, kuning, merah — sekilas langsung paham.', f3_p: 'Setiap kartu budget menunjukkan posisimu saat ini secara instan. Tidak perlu hitung-hitungan.',
+      f4_pill: 'Dana perjalanan & acara', f4_h3: 'Amplop untuk Bali, pernikahan, apapun.', f4_p: 'Dana satu kali yang hidup berdampingan dengan budget bulanan. Tutup saat perjalanan selesai.',
+      f5_pill: 'Widget home screen', f5_h3: 'Pengeluaran hari ini di layar utamamu.', f5_p: 'Widget medium + kecil untuk lock screen, home screen, dan StandBy.',
+      f6_pill: 'Privat secara default', f6_h3: 'Uangmu tetap di ponselmu. Titik.', f6_p: 'Tidak ada login bank, tidak ada screen-scraping, tidak ada sandiwara "kami menghargai privasi Anda". HitungDuit berjalan sepenuhnya on-device dengan backup iCloud opsional — terenkripsi end-to-end.',
+      how_eye: 'Cara kerja',
+      how_title: 'Tiga langkah. <span class="hl-dark">Itu saja.</span>',
+      s1_h4: 'Atur budget bulananmu', s1_p: 'Pilih kategori yang penting — Makanan, Transportasi, Tagihan — dan tetapkan batas rupiah untuk masing-masing. Template berulang mengurus semuanya setiap bulan.',
+      s2_h4: 'Catat saat kamu belanja', s2_p: 'Widget, Control Center, atau langsung di aplikasi — dua ketukan dan sudah tercatat. Tidak perlu scan struk, tidak perlu hubungkan bank.',
+      s3_h4: 'Tetap sesuai rencana', s3_p: 'Kartu hijau-kuning-merah memberitahumu posisimu. Geser bulan, loncat ke hari ini, atau gulir ke belakang untuk melihat ke mana uangmu pergi.',
+      tess_eye: 'Testimoni', tess_title: 'Yang dikatakan pengguna awal.',
+      t1_q: '"Akhirnya ada aplikasi budget yang pakai Rupiah dengan benar dan nggak nyoba konek ke rekening bankku. Shortcut Control Center-nya jenius — langsung catat setiap gojek."', t1_role: 'Jakarta · Designer',
+      t2_q: '"Aplikasi budget paling simpel yang pernah saya coba. Satu kali bayar, nggak ada langganan tiap bulan. Warna hijau-kuning-merah-nya langsung kelihatan budget-nya gimana."', t2_role: 'Surabaya · Freelancer',
+      t3_q: '"Pakai YNAB bertahun-tahun, pindah karena lelah berlangganan. HitungDuit memenuhi 90% kebutuhanku, dengan tampilan indah, seharga satu kopi."', t3_role: 'Bandung · PM',
+      price_eye: 'Harga',
+      price_title: 'Bayar sekali. <span class="hl-dark">Pakai selamanya.</span>',
+      price_sub: 'Tanpa langganan. Tanpa gimmick "lifetime deal". Bayar sekali dan milikmu selamanya.',
+      free_name: 'Gratis', free_sub: 'Selamanya. Satu wallet, transaksi tak terbatas.',
+      free_f1: 'Transaksi tak terbatas', free_f2: '1 wallet, 5 kategori', free_f3: 'Budget bulanan + ringkasan', free_f4: 'Bahasa Indonesia + English',
+      free_btn: 'Dapatkan HitungDuit Gratis',
+      pro_name: 'Pro Unlock', pro_sub: 'Satu kali bayar. Harga peluncuran — berakhir 31 Mei 2026.',
+      pro_f1: 'Semua fitur Gratis', pro_f2: 'Wallet & kategori tak terbatas', pro_f3: 'Widget + quick-add Control Center', pro_f4: 'Dana perjalanan & acara', pro_f5: 'Template budget berulang', pro_f6: 'iCloud sync (terenkripsi E2E)', pro_f7: 'Ekspor CSV',
+      pro_btn: 'Buka Pro — Rp 79.000',
+      faq_eye: 'FAQ', faq_title: 'Pertanyaan, terjawab.',
+      faq1_q: 'Apakah HitungDuit terhubung ke rekening bankku?', faq1_a: 'Tidak — dan itu memang disengaja. Bank Indonesia tidak menawarkan API developer yang bersih, dan screen-scraping itu rapuh dan berisiko. Kamu mencatat transaksi secara manual (2 ketukan via widget), sehingga data keuanganmu tidak pernah meninggalkan ponselmu.',
+      faq2_q: 'Apakah benar-benar bayar sekali?', faq2_a: 'Ya. Bayar Rp 79.000 sekali dan Pro milikmu selamanya — di setiap perangkat iOS yang masuk dengan Apple ID-mu. Tidak ada perpanjangan, tidak ada biaya kejutan, tidak ada fitur yang ditahan oleh langganan.',
+      faq3_q: 'Apakah mendukung Android?', faq3_a: 'Belum. HitungDuit dibangun iOS-first untuk memanfaatkan sepenuhnya widget, Control Center, StandBy, dan polish SwiftUI. Android ada di roadmap untuk 2027.',
+      faq4_q: 'Bisakah saya mengekspor data saya?', faq4_a: 'Tentu. Pengguna Pro dapat mengekspor riwayat transaksi lengkap sebagai CSV kapan saja. Data kamu adalah milikmu — jika kamu pergi, kamu keluar dengan semuanya.',
+      faq5_q: 'Bahasa apa saja yang didukung?', faq5_a: 'Bahasa Indonesia dan Inggris saat peluncuran. Setiap label, tooltip, dan teks ditulis secara native dalam keduanya — bukan terjemahan mesin. Bahasa lain menyusul berdasarkan suara pengguna.',
+      final_h2: 'Mulai hitung duit kamu.<br>Hari ini.',
+      final_p: 'Gratis selamanya. Upgrade ke Pro saat kamu siap. Tersedia di iPhone dan iPad.',
+      final_btn: 'Download di App Store',
+      foot_privacy: 'Privasi', foot_terms: 'Syarat', foot_support: 'Dukungan', foot_twitter: 'Twitter', foot_ig: 'Instagram',
+    },
+    ja: {
+      page_title: 'HitungDuit — シンプルで正直な毎日の家計管理',
+      nav_features: '機能', nav_how: '使い方', nav_pricing: '料金', nav_faq: 'よくある質問', nav_download: 'ダウンロード',
+      hero_eyebrow: 'iOS専用、インドネシア向けに作られたアプリ',
+      hero_h1: 'シンプルで<span class="hl">速くて、</span>正直な毎日の家計管理。',
+      hero_sub: 'HitungDuitで収入・支出・月々の予算を管理しましょう — 銀行へのアクセス不要、面倒なサブスクなし。一度払えばずっと使える。',
+      hero_cta_dl: 'App Storeでダウンロード', hero_cta_how: '使い方を見る →',
+      hero_reviews: '4.9 — 2,300件以上のレビュー', hero_price: '無料 · 買い切りPro',
+      badge_income: '収入 · 今日', badge_budget: '予算', badge_on_track: '順調 🎯', badge_food: '食費',
+      proof_users: 'アクティブユーザー', proof_rating: 'App Storeレーティング', proof_tx: '記録された取引', proof_pro: '買い切りPro', proof_bank: '銀行アクセス不要',
+      feat_eye: '機能',
+      feat_title: 'お金を<span class="hl-dark">管理するために必要なもの</span>だけ、無駄なし。',
+      feat_sub: 'ホームウィジェット、コントロールセンターショートカット、インドネシア向けUXを備えたiOS専用アプリ。',
+      f1_pill: '主要機能', f1_h3: '2秒で取引を記録。', f1_p: 'ロック画面からスワイプ、コントロールセンターをタップ、金額を入力、完了。「あとで記録しよう」はもう不要。',
+      f2_pill: '🇮🇩 インドネシア語 + 英語', f2_h3: 'インドネシア語、ネイティブ対応。', f2_p: 'Rp形式、ローカルカテゴリ、インドネシア語テキスト。翻訳ではなく、真に現地向けに作られています。',
+      f3_pill: '予算信号機', f3_h3: '緑・黄・赤 — ひと目でわかる。', f3_p: 'すべての予算カードが現在の状況を瞬時に表示。計算不要、頭を使わなくていい。',
+      f4_pill: '旅行・イベント資金', f4_h3: 'バリ、結婚式など、何にでも使える封筒。', f4_p: '月次予算と並存する一時的な資金。旅行が終わったら閉じるだけ。',
+      f5_pill: 'ホームウィジェット', f5_h3: '今日の支出をホーム画面で確認。', f5_p: 'ロック画面、ホーム画面、スタンバイ用の中・小ウィジェット。',
+      f6_pill: 'プライバシー優先', f6_h3: 'あなたのお金はあなたのスマホに。それだけ。', f6_p: '銀行ログイン不要、スクリーンスクレイピングなし、「プライバシーを大切に」という建前もなし。完全オンデバイスで動作、iCloudバックアップはE2E暗号化。',
+      how_eye: '使い方',
+      how_title: '3ステップ。<span class="hl-dark">それだけ。</span>',
+      s1_h4: '月々の予算を設定', s1_p: '重要なカテゴリ（食費、交通費、光熱費）を選び、それぞれにルピア上限を設定。毎月の繰り返しテンプレートが作業を自動化。',
+      s2_h4: '使うたびに記録', s2_p: 'ウィジェット、コントロールセンター、またはアプリ内 — 2タップで記録完了。レシートスキャンも銀行連携も不要。',
+      s3_h4: '予算通りに進む', s3_p: '緑・黄・赤のカードで現在の状況を確認。月をスワイプしたり、今日に戻ったり、過去を振り返ったりできます。',
+      tess_eye: 'ユーザーの声', tess_title: '初期ユーザーのレビュー。',
+      t1_q: '「ついにルピアを正しく使い、銀行に接続しようとしないアプリが登場。コントロールセンターのショートカットは天才的 — すべての取引をすぐ記録できる。」', t1_role: 'ジャカルタ · デザイナー',
+      t2_q: '「今まで試した中で最もシンプルな家計アプリ。一度払いでサブスク不要。緑・黄・赤の色で予算の状況がすぐわかる。」', t2_role: 'スラバヤ · フリーランサー',
+      t3_q: '「YNABを何年も使っていたが、サブスク疲れで乗り換えた。HitungDuitはコーヒー1杯の値段で、必要な機能の90%を美しく提供してくれる。」', t3_role: 'バンドン · PM',
+      price_eye: '料金',
+      price_title: '一度払い。<span class="hl-dark">永久に使える。</span>',
+      price_sub: 'サブスクなし。「生涯プラン」のギミックなし。一度払えばあなたのもの。',
+      free_name: '無料', free_sub: '永久。1ウォレット、取引数無制限。',
+      free_f1: '取引数無制限', free_f2: '1ウォレット、5カテゴリ', free_f3: '月次予算 + サマリー', free_f4: 'インドネシア語 + 英語',
+      free_btn: 'HitungDuitを無料で入手',
+      pro_name: 'Proアンロック', pro_sub: '一度払い。ローンチ価格 — 2026年5月31日まで。',
+      pro_f1: '無料版のすべて', pro_f2: 'ウォレット・カテゴリ無制限', pro_f3: 'ウィジェット + コントロールセンター', pro_f4: '旅行・イベント資金', pro_f5: '繰り返し予算テンプレート', pro_f6: 'iCloudSync（E2E暗号化）', pro_f7: 'CSVエクスポート',
+      pro_btn: 'Proをアンロック — Rp 79,000',
+      faq_eye: 'よくある質問', faq_title: 'ご質問にお答えします。',
+      faq1_q: 'HitungDuitは銀行に接続しますか？', faq1_a: 'いいえ — それは意図的な設計です。インドネシアの銀行はクリーンな開発者APIを提供しておらず、スクリーンスクレイピングは脆弱でリスクがあります。ウィジェット経由の2タップで手動記録するため、お金のデータはスマホから外に出ません。',
+      faq2_q: '本当に一度払いですか？', faq2_a: 'はい。Rp 79,000を一度払えば、Apple IDでサインインしたすべてのiOSデバイスでProが永久に使えます。更新不要、サプライズ課金なし。',
+      faq3_q: 'Androidに対応していますか？', faq3_a: 'まだです。HitungDuitはウィジェット、コントロールセンター、スタンバイ、SwiftUIの最大活用のためiOS専用で作られています。Androidは2027年のロードマップにあります。',
+      faq4_q: 'データをエクスポートできますか？', faq4_a: 'もちろんです。Proユーザーはいつでも完全な取引履歴をCSVでエクスポートできます。データはあなたのもの — 退会してもすべて持ち出せます。',
+      faq5_q: '対応言語は？', faq5_a: 'ローンチ時はインドネシア語と英語に対応。すべてのラベル、ツールチップ、テキストは機械翻訳ではなくネイティブに記述。ユーザーの投票に基づき他の言語も追加予定。',
+      final_h2: 'お金の管理を始めよう。<br>今日から。',
+      final_p: '永久無料。準備ができたらProにアップグレード。iPhoneとiPadで動作。',
+      final_btn: 'App Storeでダウンロード',
+      foot_privacy: 'プライバシー', foot_terms: '利用規約', foot_support: 'サポート', foot_twitter: 'Twitter', foot_ig: 'Instagram',
+    },
+    es: {
+      page_title: 'HitungDuit — Presupuesto diario simple y honesto',
+      nav_features: 'Funciones', nav_how: 'Cómo funciona', nav_pricing: 'Precios', nav_faq: 'Preguntas', nav_download: 'Descargar',
+      hero_eyebrow: 'iOS primero, hecho para Indonesia',
+      hero_h1: 'Gestión de dinero <span class="hl">simple,</span> rápida y honesta.',
+      hero_sub: 'HitungDuit te ayuda a controlar ingresos, gastos y presupuesto mensual — sin acceso bancario, sin suscripciones complicadas. Paga una vez, úsalo siempre.',
+      hero_cta_dl: 'Descargar en App Store', hero_cta_how: 'Ver cómo funciona →',
+      hero_reviews: '4.9 — más de 2.300 reseñas', hero_price: 'Gratis · Pro de pago único',
+      badge_income: 'INGRESOS · Hoy', badge_budget: 'PRESUPUESTO', badge_on_track: 'Al día 🎯', badge_food: 'COMIDA',
+      proof_users: 'Usuarios activos', proof_rating: 'Puntuación App Store', proof_tx: 'Transacciones registradas', proof_pro: 'Pro pago único', proof_bank: 'Acceso bancario necesario',
+      feat_eye: 'Funciones',
+      feat_title: 'Todo lo que necesitas para <span class="hl-dark">controlar tu dinero</span> — nada más.',
+      feat_sub: 'Construido iOS-first con widget de inicio, acceso rápido al Centro de Control y UX amigable para Indonesia — todo en una sola app.',
+      f1_pill: 'Función estrella', f1_h3: 'Registra una transacción en 2 segundos.', f1_p: 'Desliza desde la pantalla de bloqueo, toca el acceso en Centro de Control, escribe el monto, listo. Se acabaron las excusas de "lo anoto después".',
+      f2_pill: '🇮🇩 Bahasa + Inglés', f2_h3: 'Bahasa Indonesia, de forma nativa.', f2_p: 'Formato Rp, categorías locales, textos en indonesio. No es una traducción — verdaderamente hecho para ti.',
+      f3_pill: 'Semáforo de presupuesto', f3_h3: 'Verde, amarillo, rojo — de un vistazo.', f3_p: 'Cada tarjeta de presupuesto muestra tu situación al instante. Sin cálculos, sin esfuerzo mental.',
+      f4_pill: 'Fondos de viaje y eventos', f4_h3: 'Sobres para Bali, bodas, lo que sea.', f4_p: 'Fondos únicos que conviven con tu presupuesto mensual. Ciérralos cuando termine el viaje.',
+      f5_pill: 'Widget de inicio', f5_h3: 'Tu gasto de hoy en la pantalla de inicio.', f5_p: 'Widgets medianos y pequeños para pantalla de bloqueo, inicio y StandBy.',
+      f6_pill: 'Privado por defecto', f6_h3: 'Tu dinero se queda en tu teléfono. Punto.', f6_p: 'Sin inicios de sesión bancarios, sin screen-scraping, sin teatro de "valoramos tu privacidad". HitungDuit funciona completamente en el dispositivo con backup iCloud opcional — cifrado de extremo a extremo.',
+      how_eye: 'Cómo funciona',
+      how_title: 'Tres pasos. <span class="hl-dark">Eso es todo.</span>',
+      s1_h4: 'Establece tu presupuesto mensual', s1_p: 'Elige las categorías que importan — Comida, Transporte, Facturas — y asigna un límite en rupias a cada una. Las plantillas recurrentes hacen el trabajo pesado cada mes.',
+      s2_h4: 'Registra al gastar', s2_p: 'Widget, Centro de Control o en la app — dos toques y listo. Sin escanear recibos, sin vincular bancos, sin fricciones.',
+      s3_h4: 'Mantente al día', s3_p: 'Las tarjetas verde-amarillo-rojo te dicen cómo vas. Desliza meses, salta a hoy o desplázate para ver en qué se fue todo.',
+      tess_eye: 'Testimonios', tess_title: 'Lo que dicen los primeros usuarios.',
+      t1_q: '"Por fin una app de presupuesto que usa Rupias correctamente y no intenta conectarse a mi banco. El acceso rápido del Centro de Control es genial — registro cada gasto al instante."', t1_role: 'Yakarta · Diseñador',
+      t2_q: '"La app de presupuesto más simple que he probado. Pago único, sin suscripciones mensuales. Los colores verde-amarillo-rojo muestran al instante cómo va tu presupuesto."', t2_role: 'Surabaya · Freelancer',
+      t3_q: '"Usé YNAB durante años, me cambié porque el cansancio de las suscripciones es real. HitungDuit cubre el 90% de lo que necesitaba, de forma hermosa, por el precio de un café."', t3_role: 'Bandung · PM',
+      price_eye: 'Precios',
+      price_title: 'Paga una vez. <span class="hl-dark">Úsalo siempre.</span>',
+      price_sub: 'Sin suscripciones. Sin trucos de "oferta de por vida". Solo paga una vez y es tuyo.',
+      free_name: 'Gratis', free_sub: 'Para siempre. Una cartera, transacciones ilimitadas.',
+      free_f1: 'Transacciones ilimitadas', free_f2: '1 cartera, 5 categorías', free_f3: 'Presupuesto mensual + resumen', free_f4: 'Bahasa Indonesia + Inglés',
+      free_btn: 'Obtener HitungDuit gratis',
+      pro_name: 'Pro Unlock', pro_sub: 'Pago único. Precio de lanzamiento — termina el 31 de mayo de 2026.',
+      pro_f1: 'Todo lo de Gratis', pro_f2: 'Carteras y categorías ilimitadas', pro_f3: 'Widgets + acceso rápido Centro de Control', pro_f4: 'Fondos de viaje y eventos', pro_f5: 'Plantillas de presupuesto recurrentes', pro_f6: 'Sync iCloud (cifrado E2E)', pro_f7: 'Exportar CSV',
+      pro_btn: 'Desbloquear Pro — Rp 79.000',
+      faq_eye: 'Preguntas', faq_title: 'Preguntas, respondidas.',
+      faq1_q: '¿HitungDuit se conecta a mi banco?', faq1_a: 'No — y eso es intencional. Los bancos indonesios no ofrecen APIs limpias para desarrolladores, y el screen-scraping es frágil y arriesgado. Registras transacciones manualmente (2 toques vía widget), por lo que tus datos nunca salen de tu teléfono.',
+      faq2_q: '¿Es realmente un pago único?', faq2_a: 'Sí. Paga Rp 79.000 una vez y Pro es tuyo para siempre — en todos los dispositivos iOS con tu Apple ID. Sin renovaciones, sin cargos sorpresa.',
+      faq3_q: '¿Soporta Android?', faq3_a: 'Todavía no. HitungDuit está construido iOS-first para aprovechar al máximo los widgets, Centro de Control, StandBy y SwiftUI. Android está en el roadmap para 2027.',
+      faq4_q: '¿Puedo exportar mis datos?', faq4_a: 'Por supuesto. Los usuarios Pro pueden exportar el historial completo de transacciones en CSV en cualquier momento. Tus datos son tuyos — si te vas, te llevas todo.',
+      faq5_q: '¿Qué idiomas están disponibles?', faq5_a: 'Bahasa Indonesia e inglés en el lanzamiento. Cada etiqueta, tooltip y texto está escrito nativamente en ambos — no traducido por máquina. Más idiomas según los votos de los usuarios.',
+      final_h2: 'Empieza a controlar tu dinero.<br>Hoy.',
+      final_p: 'Gratis para siempre. Actualiza a Pro cuando estés listo. Funciona en iPhone y iPad.',
+      final_btn: 'Descargar en App Store',
+      foot_privacy: 'Privacidad', foot_terms: 'Términos', foot_support: 'Soporte', foot_twitter: 'Twitter', foot_ig: 'Instagram',
+    },
+    zh: {
+      page_title: 'HitungDuit — 简单诚实的日常记账应用',
+      nav_features: '功能', nav_how: '如何使用', nav_pricing: '定价', nav_faq: '常见问题', nav_download: '下载',
+      hero_eyebrow: 'iOS 优先，专为印度尼西亚打造',
+      hero_h1: '简单、<span class="hl">快速、</span>诚实的日常记账。',
+      hero_sub: 'HitungDuit 帮你管理收入、支出和月度预算 — 无需银行授权，无需烦人的订阅。一次付费，永久使用。',
+      hero_cta_dl: '在 App Store 下载', hero_cta_how: '了解使用方式 →',
+      hero_reviews: '4.9 — 2,300+ 条评价', hero_price: '免费 · 一次性 Pro',
+      badge_income: '收入 · 今天', badge_budget: '预算', badge_on_track: '按计划进行 🎯', badge_food: '餐饮',
+      proof_users: '活跃用户', proof_rating: 'App Store 评分', proof_tx: '已记录交易', proof_pro: 'Pro 一次付费', proof_bank: '需要银行访问',
+      feat_eye: '功能',
+      feat_title: '你需要的<span class="hl-dark">记账功能</span>，一个不少，一个不多。',
+      feat_sub: 'iOS 优先打造，内置主屏幕小组件、控制中心快捷方式和印尼友好的用户体验，全在一个应用中。',
+      f1_pill: '核心功能', f1_h3: '2 秒记录一笔交易。', f1_p: '从锁屏下滑，点击控制中心图标，输入金额，完成。再也没有"等会儿再记"的借口。',
+      f2_pill: '🇮🇩 印尼语 + 英语', f2_h3: '原生印度尼西亚语。', f2_p: 'Rp 格式、本地分类、印尼语文案。不是翻译 — 真正为你而生。',
+      f3_pill: '预算交通灯', f3_h3: '绿、黄、红 — 一眼看清。', f3_p: '每张预算卡片即时显示你的消费状况，无需计算，一目了然。',
+      f4_pill: '旅行与活动基金', f4_h3: '为巴厘岛、婚礼等设置专属信封。', f4_p: '与月度预算并存的一次性基金，活动结束后关闭即可。',
+      f5_pill: '主屏幕小组件', f5_h3: '今日支出显示在主屏幕。', f5_p: '锁屏、主屏幕和待机模式的中小尺寸小组件。',
+      f6_pill: '默认隐私保护', f6_h3: '你的钱留在你的手机上。就这样。', f6_p: '无需银行登录，无屏幕抓取，无"我们重视您的隐私"的表演。完全本地运行，可选 iCloud 备份 — 端到端加密。',
+      how_eye: '如何使用',
+      how_title: '三个步骤。<span class="hl-dark">就这些。</span>',
+      s1_h4: '设置月度预算', s1_p: '选择重要分类 — 餐饮、交通、账单 — 并为每项设置卢比上限。每月的循环模板会自动处理。',
+      s2_h4: '消费时记录', s2_p: '小组件、控制中心或应用内 — 两次点击即可完成。无需扫描收据，无需关联银行。',
+      s3_h4: '保持正轨', s3_p: '绿黄红卡片告诉你当前状态。滑动月份、跳到今天，或向后滚动查看资金去向。',
+      tess_eye: '用户评价', tess_title: '早期用户的反馈。',
+      t1_q: '"终于有一款正确使用卢比并且不尝试连接我银行账户的预算应用。控制中心快捷方式太聪明了 — 每笔消费都能即时记录。"', t1_role: '雅加达 · 设计师',
+      t2_q: '"我用过最简单的预算应用。一次付费，没有月度订阅。绿黄红颜色让你一眼看出预算状况。"', t2_role: '泗水 · 自由职业者',
+      t3_q: '"用了多年 YNAB，因为订阅疲劳而转过来。HitungDuit 用一杯咖啡的价格，美观地满足了我 90% 的需求。"', t3_role: '万隆 · 产品经理',
+      price_eye: '定价',
+      price_title: '一次付费。<span class="hl-dark">永久拥有。</span>',
+      price_sub: '无订阅。无"终身套餐"噱头。一次付费，永久归你所有。',
+      free_name: '免费版', free_sub: '永久免费。一个钱包，无限交易。',
+      free_f1: '无限交易记录', free_f2: '1 个钱包，5 个分类', free_f3: '月度预算 + 摘要', free_f4: '印尼语 + 英语',
+      free_btn: '免费获取 HitungDuit',
+      pro_name: 'Pro 解锁', pro_sub: '一次付费。限时发布价 — 截至 2026 年 5 月 31 日。',
+      pro_f1: '包含免费版所有功能', pro_f2: '无限钱包和分类', pro_f3: '小组件 + 控制中心快速记账', pro_f4: '旅行和活动基金', pro_f5: '循环预算模板', pro_f6: 'iCloud 同步（端到端加密）', pro_f7: 'CSV 导出',
+      pro_btn: '解锁 Pro — Rp 79,000',
+      faq_eye: '常见问题', faq_title: '问题，已解答。',
+      faq1_q: 'HitungDuit 会连接我的银行吗？', faq1_a: '不会 — 这是有意为之的设计。印度尼西亚银行不提供干净的开发者 API，屏幕抓取既脆弱又存在风险。你通过小组件手动记录交易（2次点击），因此你的财务数据永远不会离开你的手机。',
+      faq2_q: '真的是一次付费吗？', faq2_a: '是的。支付 Rp 79,000 一次，Pro 就永久属于你 — 在所有使用你 Apple ID 登录的 iOS 设备上。无需续费，无隐藏收费。',
+      faq3_q: '支持 Android 吗？', faq3_a: '暂不支持。HitungDuit 是 iOS 优先打造，充分利用小组件、控制中心、待机模式和 SwiftUI 特性。Android 计划于 2027 年推出。',
+      faq4_q: '可以导出数据吗？', faq4_a: '当然可以。Pro 用户随时可以将完整交易记录导出为 CSV。数据属于你 — 如果你离开，所有数据都带走。',
+      faq5_q: '支持哪些语言？', faq5_a: '发布时支持印度尼西亚语和英语，每个标签、提示和文案均为原生编写，非机器翻译。更多语言将根据用户投票陆续推出。',
+      final_h2: '开始管理你的钱。<br>就是今天。',
+      final_p: '永久免费。准备好了就升级到 Pro。支持 iPhone 和 iPad。',
+      final_btn: '在 App Store 下载',
+      foot_privacy: '隐私政策', foot_terms: '服务条款', foot_support: '支持', foot_twitter: 'Twitter', foot_ig: 'Instagram',
+    }
+  };
+
+  let lang = localStorage.getItem('hd-lang') || 'id';
+
+  function t(key) { return T[lang][key] || T.en[key] || key; }
+
+  function applyLang() {
+    document.documentElement.lang = lang;
+    document.title = t('page_title');
+    document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
+    document.querySelectorAll('[data-i18n-html]').forEach(el => el.innerHTML = t(el.dataset.i18nHtml));
+    const m = LANG_META[lang];
+    document.getElementById('lang-flag').textContent = m.flag;
+    document.getElementById('lang-label').textContent = m.label;
+    document.querySelectorAll('.lang-menu button').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    localStorage.setItem('hd-lang', lang);
+  }
+
+  window.setLang = function(l, e) {
+    if (e) e.stopPropagation();
+    lang = l;
+    applyLang();
+    document.getElementById('lang-menu').classList.remove('open');
+  };
+
+  window.toggleLangMenu = function(e) {
+    e.stopPropagation();
+    document.getElementById('lang-menu').classList.toggle('open');
+  };
+
+  document.addEventListener('click', () => {
+    document.getElementById('lang-menu').classList.remove('open');
+  });
+
+  applyLang();
+</script>
+
+</body>
+</html>
