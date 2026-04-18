@@ -1,263 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=1320">
-<title>Waltly — App Store Screenshot 1</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --hd-dark:          #1C1C2E;
-    --hd-lime:          #C8F04D;
-    --hd-surface:       #FAFAFA;
-    --hd-bg:            #F3F3F5;
-    --hd-muted:         #9CA3AF;
-    --hd-income-tint:   #E6FAB8;
-    --hd-income-text:   #389E1F;
-    --hd-expense-tint:  #FFE5E0;
-    --hd-expense-text:  #DB3D2E;
-    --hd-font-sans:     'Nunito', ui-rounded, 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1320">
+  <title>Waltly — App Store Screenshot 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 1320px; height: 2868px; overflow: hidden; background: var(--hd-bg); }
+  <style>
+    :root {
+      --hd-dark: #1C1C2E;
+      --hd-lime: #C8F04D;
+      --hd-surface: #FAFAFA;
+      --hd-bg: #F3F3F5;
+      --hd-muted: #9CA3AF;
+      --hd-income-tint: #E6FAB8;
+      --hd-income-text: #389E1F;
+      --hd-expense-tint: #FFE5E0;
+      --hd-expense-text: #DB3D2E;
+      --hd-font-sans: 'Nunito', ui-rounded, 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
 
-  .canvas {
-    width: 1320px;
-    height: 2868px;
-    background: var(--hd-bg);
-    position: relative;
-    overflow: hidden;
-    font-family: var(--hd-font-sans);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  /* ---- Top text section ---- */
-  .top {
-    position: absolute;
-    top: 180px;
-    left: 0; right: 0;
-    text-align: center;
-    z-index: 10;
-  }
+    html,
+    body {
+      width: 1320px;
+      height: 2868px;
+      overflow: hidden;
+      background: var(--hd-bg);
+    }
 
-  .headline {
-    font-size: 80px;
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    line-height: 1.06;
-    color: var(--hd-dark);
-    padding: 0 100px;
-  }
+    .canvas {
+      width: 1320px;
+      height: 2868px;
+      background: var(--hd-bg);
+      position: relative;
+      overflow: hidden;
+      font-family: var(--hd-font-sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-  .headline .hl {
-    background: var(--hd-lime);
-    padding: 0 14px 4px;
-    border-radius: 18px;
-    display: inline-block;
-    transform: rotate(-1.2deg);
-  }
+    /* ---- Top text section ---- */
+    .top {
+      position: absolute;
+      top: 180px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 10;
+    }
 
-  .subtext {
-    font-size: 36px;
-    font-weight: 500;
-    color: #50505e;
-    margin-top: 32px;
-    line-height: 1.45;
-    padding: 0 140px;
-  }
+    .headline {
+      font-size: 80px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.06;
+      color: var(--hd-dark);
+      padding: 0 100px;
+    }
 
-  /* ---- Phone mockup ---- */
-  .phone-wrap {
-    position: absolute;
-    top: 560px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 700px;
-    display: flex;
-    justify-content: center;
-  }
+    .headline .hl {
+      background: var(--hd-lime);
+      padding: 0 14px 4px;
+      border-radius: 18px;
+      display: inline-block;
+      transform: rotate(-1.2deg);
+    }
 
-  .phone-wrap::before {
-    content: '';
-    position: absolute;
-    inset: -80px -60px;
-    background: radial-gradient(ellipse at center, rgba(200, 240, 77, 0.30), transparent 60%);
-    z-index: 0;
-  }
+    .subtext {
+      font-size: 36px;
+      font-weight: 500;
+      color: #50505e;
+      margin-top: 32px;
+      line-height: 1.45;
+      padding: 0 140px;
+    }
 
-  .phone {
-    width: 660px;
-    height: 1380px;
-    background: var(--hd-dark);
-    border-radius: 88px;
-    padding: 16px;
-    box-shadow:
-      0 60px 120px rgba(28, 28, 46, 0.32),
-      0 0 0 2px rgba(255, 255, 255, 0.06) inset;
-    position: relative;
-    z-index: 1;
-    transform: rotate(-3deg);
-  }
+    /* ---- Phone mockup ---- */
+    .phone-wrap {
+      position: absolute;
+      top: 560px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      display: flex;
+      justify-content: center;
+    }
 
-  .phone-inner {
-    width: 100%;
-    height: 100%;
-    background: var(--hd-bg);
-    border-radius: 72px;
-    overflow: hidden;
-    position: relative;
-  }
+    .phone-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -80px -60px;
+      background: radial-gradient(ellipse at center, rgba(200, 240, 77, 0.30), transparent 60%);
+      z-index: 0;
+    }
 
-  .phone-inner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    display: block;
-  }
+    .phone {
+      width: 660px;
+      height: 1380px;
+      background: var(--hd-dark);
+      border-radius: 88px;
+      padding: 16px;
+      box-shadow:
+        0 60px 120px rgba(28, 28, 46, 0.32),
+        0 0 0 2px rgba(255, 255, 255, 0.06) inset;
+      position: relative;
+      z-index: 1;
+      transform: rotate(-3deg);
+    }
 
-  /* ---- Float badges ---- */
-  .float-badge {
-    position: absolute;
-    background: #fff;
-    border-radius: 28px;
-    padding: 20px 26px;
-    box-shadow: 0 16px 40px rgba(28, 28, 46, 0.13);
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    font-family: var(--hd-font-sans);
-    z-index: 5;
-  }
+    .phone-inner {
+      width: 100%;
+      height: 100%;
+      background: var(--hd-bg);
+      border-radius: 72px;
+      overflow: hidden;
+      position: relative;
+    }
 
-  .fb-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    flex-shrink: 0;
-  }
+    .phone-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
 
-  .fb-label {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--hd-muted);
-    margin-bottom: 4px;
-  }
+    /* ---- Float badges ---- */
+    .float-badge {
+      position: absolute;
+      background: #fff;
+      border-radius: 28px;
+      padding: 20px 26px;
+      box-shadow: 0 16px 40px rgba(28, 28, 46, 0.13);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-family: var(--hd-font-sans);
+      z-index: 5;
+    }
 
-  .fb-value {
-    font-size: 28px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.01em;
-    color: var(--hd-dark);
-  }
+    .fb-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
 
-  .fb-1 {
-    top: 80px;
-    left: -80px;
-    transform: rotate(-6deg);
-  }
+    .fb-label {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--hd-muted);
+      margin-bottom: 4px;
+    }
 
-  .fb-2 {
-    bottom: 260px;
-    right: -100px;
-    transform: rotate(5deg);
-  }
+    .fb-value {
+      font-size: 28px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.01em;
+      color: var(--hd-dark);
+    }
 
-  .fb-3 {
-    top: 520px;
-    right: -140px;
-    transform: rotate(3deg);
-  }
+    .fb-1 {
+      top: 80px;
+      left: -80px;
+      transform: rotate(-6deg);
+    }
 
-  /* ---- Bottom App Store badge ---- */
-  .bottom-badge {
-    position: absolute;
-    bottom: 140px;
-    left: 0; right: 0;
-    display: flex;
-    justify-content: center;
-    z-index: 10;
-  }
+    .fb-2 {
+      bottom: 260px;
+      right: -100px;
+      transform: rotate(5deg);
+    }
 
-  .app-store-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 16px;
-    background: var(--hd-dark);
-    color: #fff;
-    padding: 24px 44px;
-    border-radius: 999px;
-    font-family: var(--hd-font-sans);
-    font-size: 30px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    box-shadow: 0 12px 36px rgba(28, 28, 46, 0.22);
-  }
+    .fb-3 {
+      top: 520px;
+      right: -140px;
+      transform: rotate(3deg);
+    }
 
-  .app-store-btn svg { flex-shrink: 0; }
-</style>
+    /* ---- Bottom App Store badge ---- */
+    .bottom-badge {
+      position: absolute;
+      bottom: 140px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .app-store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--hd-dark);
+      color: #fff;
+      padding: 24px 44px;
+      border-radius: 999px;
+      font-family: var(--hd-font-sans);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      box-shadow: 0 12px 36px rgba(28, 28, 46, 0.22);
+    }
+
+    .app-store-btn svg {
+      flex-shrink: 0;
+    }
+  </style>
 </head>
+
 <body>
-<div class="canvas">
 
-  <div class="top">
-    <h1 class="headline">Every transaction, <span class="hl">crystal clear.</span></h1>
-    <p class="subtext">Track income and expenses across all your wallets</p>
+  <button onclick="captureScreenshot()" style="position:fixed;top:20px;right:20px;z-index:9999;">
+    Capture
+  </button>
+  <div class="canvas">
+
+    <div class="top">
+      <h1 class="headline">Every transaction, <span class="hl">crystal clear.</span></h1>
+      <p class="subtext">Track income and expenses across all your wallets</p>
+    </div>
+
+    <div class="phone-wrap">
+
+      <div class="float-badge fb-1">
+        <div class="fb-icon" style="background: var(--hd-income-tint); color: var(--hd-income-text);">↗</div>
+        <div>
+          <div class="fb-label">Income · Today</div>
+          <div class="fb-value" style="color: var(--hd-income-text);">+Rp 6,200,000</div>
+        </div>
+      </div>
+
+      <div class="float-badge fb-2">
+        <div class="fb-icon" style="background: var(--hd-dark); color: #fff;">🛒</div>
+        <div>
+          <div class="fb-label">Groceries</div>
+          <div class="fb-value" style="color: var(--hd-expense-text);">−Rp 48,500</div>
+        </div>
+      </div>
+
+      <div class="float-badge fb-3">
+        <div class="fb-icon" style="background: var(--hd-lime); color: var(--hd-dark);">✓</div>
+        <div>
+          <div class="fb-label">Budget</div>
+          <div class="fb-value">On track</div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="phone-inner">
+          <img src="assets/SS1.png" alt="Waltly — Transaction view">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-badge">
+      <div class="app-store-btn">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.05 12.5a4.44 4.44 0 012.12-3.73 4.55 4.55 0 00-3.58-1.95c-1.52-.16-2.97.89-3.75.89-.79 0-1.97-.87-3.25-.85a4.78 4.78 0 00-4.02 2.45c-1.72 2.98-.44 7.37 1.23 9.78.82 1.18 1.79 2.5 3.07 2.45 1.24-.05 1.7-.79 3.2-.79 1.48 0 1.9.79 3.21.76 1.33-.02 2.17-1.19 2.98-2.38a10.47 10.47 0 001.36-2.78 4.3 4.3 0 01-2.57-3.85zM14.66 5.16a4.3 4.3 0 001-3.16 4.42 4.42 0 00-2.86 1.48 4.07 4.07 0 00-1.02 3.04 3.64 3.64 0 002.88-1.36z" />
+        </svg>
+        Download on the App Store
+      </div>
+    </div>
+
   </div>
 
-  <div class="phone-wrap">
 
-    <div class="float-badge fb-1">
-      <div class="fb-icon" style="background: var(--hd-income-tint); color: var(--hd-income-text);">↗</div>
-      <div>
-        <div class="fb-label">Income · Today</div>
-        <div class="fb-value" style="color: var(--hd-income-text);">+Rp 6,200,000</div>
-      </div>
-    </div>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    function captureScreenshot() {
+      const element = document.querySelector('.canvas');
 
-    <div class="float-badge fb-2">
-      <div class="fb-icon" style="background: var(--hd-dark); color: #fff;">🛒</div>
-      <div>
-        <div class="fb-label">Groceries</div>
-        <div class="fb-value" style="color: var(--hd-expense-text);">−Rp 48,500</div>
-      </div>
-    </div>
-
-    <div class="float-badge fb-3">
-      <div class="fb-icon" style="background: var(--hd-lime); color: var(--hd-dark);">✓</div>
-      <div>
-        <div class="fb-label">Budget</div>
-        <div class="fb-value">On track</div>
-      </div>
-    </div>
-
-    <div class="phone">
-      <div class="phone-inner">
-        <img src="assets/SS1.png" alt="Waltly — Transaction view">
-      </div>
-    </div>
-
-  </div>
-
-  <div class="bottom-badge">
-    <div class="app-store-btn">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.5a4.44 4.44 0 012.12-3.73 4.55 4.55 0 00-3.58-1.95c-1.52-.16-2.97.89-3.75.89-.79 0-1.97-.87-3.25-.85a4.78 4.78 0 00-4.02 2.45c-1.72 2.98-.44 7.37 1.23 9.78.82 1.18 1.79 2.5 3.07 2.45 1.24-.05 1.7-.79 3.2-.79 1.48 0 1.9.79 3.21.76 1.33-.02 2.17-1.19 2.98-2.38a10.47 10.47 0 001.36-2.78 4.3 4.3 0 01-2.57-3.85zM14.66 5.16a4.3 4.3 0 001-3.16 4.42 4.42 0 00-2.86 1.48 4.07 4.07 0 00-1.02 3.04 3.64 3.64 0 002.88-1.36z"/></svg>
-      Download on the App Store
-    </div>
-  </div>
-
-</div>
+      html2canvas(element, {
+        width: 1320,
+        height: 2868,
+        scale: 2, // higher = sharper image
+        useCORS: true,
+        backgroundColor: null
+      }).then(canvas => {
+        const link = document.createElement('body');
+        link.download = 'waltly-screenshot.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
 </body>
+
 </html>
 <!-- Waltly App Store Screenshot 1 of 6 -->
