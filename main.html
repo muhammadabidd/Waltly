@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Waltly — Budget harian yang simpel & jujur</title>
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="style.css">
+  <!-- index.html -->
+  <script src="script.js"></script>
+
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="brand">
+        <img src="assets/logo.jpg" alt="Waltly" class="brand-mark">
+        Waltly
+      </a>
+      <div class="nav-links">
+        <a href="#features" data-i18n="nav_features">Features</a>
+        <a href="#how" data-i18n="nav_how">How it works</a>
+        <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+        <a href="#faq" data-i18n="nav_faq">FAQ</a>
+      </div>
+      <div class="nav-end">
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu(event)">
+            <span id="lang-flag">🇮🇩</span><span id="lang-label">ID</span>
+          </button>
+          <div class="lang-menu" id="lang-menu">
+            <button onclick="setLang('id', event)" data-lang="id">🇮🇩 &nbsp;Indonesia</button>
+            <button onclick="setLang('en', event)" data-lang="en">🇬🇧 &nbsp;English</button>
+            <button onclick="setLang('ja', event)" data-lang="ja">🇯🇵 &nbsp;日本語</button>
+            <button onclick="setLang('es', event)" data-lang="es">🇪🇸 &nbsp;Español</button>
+            <button onclick="setLang('zh', event)" data-lang="zh">🇨🇳 &nbsp;中文</button>
+          </div>
+        </div>
+        <a href="#download" class="nav-cta" data-i18n="nav_download">Download</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow"><span class="dot">🇮🇩</span><span data-i18n="hero_eyebrow">iOS-first, dibuat untuk
+              Indonesia</span></span>
+          <h1 data-i18n-html="hero_h1">Budget harian yang <span class="hl">simpel,</span> cepat, dan jujur.</h1>
+          <p class="hero-sub" data-i18n="hero_sub">Waltly bantu kamu atur pemasukan, pengeluaran, dan budget bulanan —
+            tanpa akses ke rekening bank, tanpa langganan ribet. Bayar sekali, pakai selamanya.</p>
+          <div class="hero-ctas">
+            <a href="#download" class="btn-lime">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M17.05 12.5a4.44 4.44 0 012.12-3.73 4.55 4.55 0 00-3.58-1.95c-1.52-.16-2.97.89-3.75.89-.79 0-1.97-.87-3.25-.85a4.78 4.78 0 00-4.02 2.45c-1.72 2.98-.44 7.37 1.23 9.78.82 1.18 1.79 2.5 3.07 2.45 1.24-.05 1.7-.79 3.2-.79 1.48 0 1.9.79 3.21.76 1.33-.02 2.17-1.19 2.98-2.38a10.47 10.47 0 001.36-2.78 4.3 4.3 0 01-2.57-3.85zM14.66 5.16a4.3 4.3 0 001-3.16 4.42 4.42 0 00-2.86 1.48 4.07 4.07 0 00-1.02 3.04 3.64 3.64 0 002.88-1.36z" />
+              </svg>
+              <span data-i18n="hero_cta_dl">Download on App Store</span>
+            </a>
+            <a href="#how" class="btn-ghost" data-i18n="hero_cta_how">See how it works →</a>
+          </div>
+          <div class="hero-meta">
+            <span class="stars">★★★★★</span>
+            <span data-i18n="hero_reviews">4.9 — 2,300+ reviews</span>
+            <span style="opacity:0.5">·</span>
+            <span data-i18n="hero_price">Free · One-time Pro</span>
+          </div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="float-badge fb-1">
+            <div class="fb-icon" style="background:var(--hd-income-tint); color:var(--hd-income-text);">↗</div>
+            <div>
+              <div style="font-size:11px; color:var(--hd-muted); font-weight:600;" data-i18n="badge_income">INCOME ·
+                Today</div>
+              <div class="money money-inc">+Rp 6,200,000</div>
+            </div>
+          </div>
+          <div class="float-badge fb-3">
+            <div class="fb-icon" style="background:var(--hd-lime); color:var(--hd-dark);">✓</div>
+            <div>
+              <div style="font-size:11px; color:var(--hd-muted); font-weight:600;" data-i18n="badge_budget">BUDGET</div>
+              <div style="font-weight:700;" data-i18n="badge_on_track">On track 🎯</div>
+            </div>
+          </div>
+          <div class="float-badge fb-2">
+            <div class="fb-icon" style="background:var(--hd-dark); color:#fff;">🍜</div>
+            <div>
+              <div style="font-size:11px; color:var(--hd-muted); font-weight:600;" data-i18n="badge_food">FOOD</div>
+              <div class="money money-exp">−Rp 35,000</div>
+            </div>
+          </div>
+
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="notch"></div>
+              <div class="sbar">
+                <span>9:41</span>
+                <span style="display:flex; gap:5px; align-items:center;">
+                  <span style="font-size:10px;">●●●●</span>
+                  <span style="font-size:10px; opacity:0.75;">5G</span>
+                </span>
+              </div>
+              <div class="phone-body">
+                <!-- Period pill -->
+                <div style="display:flex; align-items:center; gap:8px; margin:4px 0 14px;">
+                  <div
+                    style="flex:1; background:#fff; border-radius:999px; padding:8px 14px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                    <span style="color:var(--hd-muted); font-size:16px;">‹</span>
+                    <span style="font-weight:700; font-size:14px;">Nov 2026</span>
+                    <span style="color:var(--hd-muted); font-size:16px;">›</span>
+                  </div>
+                  <div
+                    style="background:var(--hd-lime); color:var(--hd-dark); padding:8px 14px; border-radius:999px; font-weight:700; font-size:12px;">
+                    Today</div>
+                </div>
+
+                <!-- Dark balance card -->
+                <div
+                  style="background:var(--hd-dark); color:#fff; border-radius:22px; padding:18px; box-shadow:0 10px 24px rgba(28,28,46,0.25);">
+                  <div
+                    style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.55);">
+                    Total balance</div>
+                  <div
+                    style="font-size:28px; font-weight:800; letter-spacing:-0.01em; margin-top:4px; font-variant-numeric:tabular-nums;">
+                    Rp 4,820,000</div>
+                  <div style="display:flex; gap:6px; margin-top:10px;">
+                    <span
+                      style="background:var(--hd-income-tint); color:var(--hd-income-text); padding:4px 9px; border-radius:999px; font-size:10px; font-weight:700;">↗
+                      +12%</span>
+                    <span
+                      style="background:rgba(255,255,255,0.1); color:#fff; padding:4px 9px; border-radius:999px; font-size:10px; font-weight:600;">This
+                      month</span>
+                  </div>
+                  <div
+                    style="margin-top:14px; height:6px; background:rgba(255,255,255,0.1); border-radius:999px; overflow:hidden; display:flex;">
+                    <div style="width:72%; background:var(--hd-lime);"></div>
+                    <div style="width:18%; background:var(--hd-expense-tint);"></div>
+                  </div>
+                </div>
+
+                <!-- Stat tiles -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;">
+                  <div
+                    style="background:#fff; border-radius:16px; padding:12px; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                    <div
+                      style="font-size:9px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--hd-muted);">
+                      Income</div>
+                    <div style="font-size:16px; font-weight:800; margin-top:2px; font-variant-numeric:tabular-nums;">Rp
+                      6.2M</div>
+                  </div>
+                  <div
+                    style="background:#fff; border-radius:16px; padding:12px; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                    <div
+                      style="font-size:9px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--hd-muted);">
+                      Expense</div>
+                    <div style="font-size:16px; font-weight:800; margin-top:2px; font-variant-numeric:tabular-nums;">Rp
+                      1.4M</div>
+                  </div>
+                </div>
+
+                <!-- Recent -->
+                <div style="display:flex; justify-content:space-between; align-items:baseline; margin:16px 2px 8px;">
+                  <div style="font-size:14px; font-weight:800;">Recent activity</div>
+                  <div style="font-size:11px; color:var(--hd-muted);">See all</div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                  <div
+                    style="background:#fff; border-radius:14px; padding:10px 12px; display:flex; align-items:center; gap:10px; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                    <div
+                      style="width:32px; height:32px; border-radius:50%; background:var(--hd-dark); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px;">
+                      🛒</div>
+                    <div style="flex:1;">
+                      <div style="font-size:12px; font-weight:700;">Alfamart</div>
+                      <div style="font-size:10px; color:var(--hd-muted);">Groceries · 14:32</div>
+                    </div>
+                    <div class="money money-exp" style="font-size:12px;">−Rp 48,500</div>
+                  </div>
+                  <div
+                    style="background:#fff; border-radius:14px; padding:10px 12px; display:flex; align-items:center; gap:10px; box-shadow:0 3px 10px rgba(0,0,0,0.04);">
+                    <div
+                      style="width:32px; height:32px; border-radius:50%; background:var(--hd-income-tint); color:var(--hd-income-text); display:flex; align-items:center; justify-content:center; font-size:14px;">
+                      💼</div>
+                    <div style="flex:1;">
+                      <div style="font-size:12px; font-weight:700;">Gaji bulanan</div>
+                      <div style="font-size:10px; color:var(--hd-muted);">Salary · 09:00</div>
+                    </div>
+                    <div class="money money-inc" style="font-size:12px;">+Rp 6,200,000</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF STRIP -->
+  <section class="proof">
+    <div class="wrap proof-row">
+      <div class="proof-stat">
+        <div class="proof-num">50K+</div>
+        <div class="proof-lab" data-i18n="proof_users">Active users</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-num">4.9★</div>
+        <div class="proof-lab" data-i18n="proof_rating">App Store rating</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-num">2.1M+</div>
+        <div class="proof-lab" data-i18n="proof_tx">Transactions logged</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-num">Rp 79k</div>
+        <div class="proof-lab" data-i18n="proof_pro">One-time Pro</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-num">0</div>
+        <div class="proof-lab" data-i18n="proof_bank">Bank access needed</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eye" data-i18n="feat_eye">Fitur</div>
+        <div class="sec-title" data-i18n-html="feat_title">Everything you need to <span class="hl-dark">count
+            money</span> — nothing you don't.</div>
+        <div class="sec-sub" data-i18n="feat_sub">Built iOS-first with the home widget, Control Center shortcut, and
+          Indonesian-friendly UX — all in one app.</div>
+      </div>
+
+      <div class="fgrid">
+        <!-- Card 1: Quick add (wide, lime) -->
+        <div class="fcard fcard--wide fcard--lime">
+          <span class="tag-pill" data-i18n="f1_pill">Hero feature</span>
+          <h3 data-i18n="f1_h3">Log a transaction in 2 seconds flat.</h3>
+          <p data-i18n="f1_p">Swipe down from lock screen, tap the Control Center tile, type the amount, done. No more
+            "I'll log it later" excuses.</p>
+          <div class="fvisual">
+            <!-- Mini Control Center tile mockup -->
+            <div
+              style="background:rgba(28,28,46,0.9); backdrop-filter:blur(10px); border-radius:24px; padding:16px; width:220px; color:#fff; position:relative;">
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                <div
+                  style="width:32px; height:32px; border-radius:10px; background:var(--hd-lime); color:var(--hd-dark); display:flex; align-items:center; justify-content:center; font-weight:800;">
+                  +</div>
+                <div style="font-size:12px; font-weight:700;">Quick Add</div>
+              </div>
+              <div style="font-size:24px; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-0.01em;">
+                Rp 25,000</div>
+              <div style="font-size:10px; color:rgba(255,255,255,0.5); margin-top:4px;">Food · Default wallet</div>
+              <div
+                style="margin-top:12px; background:var(--hd-lime); color:var(--hd-dark); text-align:center; padding:8px; border-radius:10px; font-size:12px; font-weight:700;">
+                Save</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Bahasa (narrow, dark) -->
+        <div class="fcard fcard--narrow fcard--dark">
+          <span class="tag-pill" data-i18n="f2_pill">🇮🇩 Bahasa + English</span>
+          <h3 data-i18n="f2_h3">Bahasa Indonesia, natively.</h3>
+          <p data-i18n="f2_p">Rp formatting, local categories, Indonesian copy. Bukan terjemahan — benar-benar dibangun
+            untuk kamu.</p>
+          <div class="fvisual">
+            <div style="display:flex; flex-direction:column; gap:6px; width:100%;">
+              <div
+                style="background:rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px; font-size:12px; display:flex; justify-content:space-between;">
+                <span>Pemasukan</span><span class="tnum" style="color:var(--hd-lime); font-weight:700;">Rp 6,2jt</span>
+              </div>
+              <div
+                style="background:rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px; font-size:12px; display:flex; justify-content:space-between;">
+                <span>Pengeluaran</span><span class="tnum" style="font-weight:700;">Rp 1,4jt</span>
+              </div>
+              <div
+                style="background:rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px; font-size:12px; display:flex; justify-content:space-between;">
+                <span>Sisa</span><span class="tnum" style="font-weight:700;">Rp 4,8jt</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Budget thresholds (half) -->
+        <div class="fcard fcard--half">
+          <span class="tag-pill" data-i18n="f3_pill">Budget traffic lights</span>
+          <h3 data-i18n="f3_h3">Green, amber, red — at a glance.</h3>
+          <p data-i18n="f3_p">Every budget card shows where you stand instantly. No math, no mental gymnastics.</p>
+          <div class="fvisual">
+            <div style="display:flex; flex-direction:column; gap:8px; width:100%;">
+              <div class="mini-card" style="padding:10px 14px;">
+                <div class="mi-icon" style="background:var(--hd-income-tint); color:var(--hd-income-text);">🍜</div>
+                <div style="flex:1;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px;">
+                    <span>Food</span><span class="tnum">42% used</span>
+                  </div>
+                  <div class="bbar">
+                    <div style="width:42%; background:var(--hd-income-text);"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mini-card" style="padding:10px 14px;">
+                <div class="mi-icon" style="background:#FFF4DB; color:#B8761B;">⚡</div>
+                <div style="flex:1;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px;">
+                    <span>Bills</span><span class="tnum">78% used</span>
+                  </div>
+                  <div class="bbar">
+                    <div style="width:78%; background:#D9901E;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mini-card" style="padding:10px 14px;">
+                <div class="mi-icon" style="background:var(--hd-expense-tint); color:var(--hd-expense-text);">🎁</div>
+                <div style="flex:1;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px;">
+                    <span>Gifts</span><span class="tnum">103% — over</span>
+                  </div>
+                  <div class="bbar">
+                    <div style="width:100%; background:var(--hd-expense-text);"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Trip funds (half) -->
+        <div class="fcard fcard--half">
+          <span class="tag-pill" data-i18n="f4_pill">Trip & event funds</span>
+          <h3 data-i18n="f4_h3">Envelopes for Bali, weddings, whatever.</h3>
+          <p data-i18n="f4_p">One-off funds that live alongside monthly budgets. Close them when the trip's done.</p>
+          <div class="fvisual">
+            <div style="display:flex; gap:10px; width:100%;">
+              <div style="flex:1; background:var(--hd-sky); border-radius:16px; padding:14px; color:var(--hd-dark);">
+                <div style="font-size:18px;">🏝</div>
+                <div style="font-size:12px; font-weight:700; margin-top:6px;">Bali Trip</div>
+                <div class="tnum" style="font-size:13px; font-weight:800; margin-top:2px;">Rp 3.2M / 5M</div>
+                <div
+                  style="margin-top:8px; height:4px; background:rgba(28,28,46,0.15); border-radius:999px; overflow:hidden;">
+                  <div style="width:64%; height:100%; background:var(--hd-dark);"></div>
+                </div>
+              </div>
+              <div style="flex:1; background:var(--hd-blush); border-radius:16px; padding:14px; color:var(--hd-dark);">
+                <div style="font-size:18px;">💍</div>
+                <div style="font-size:12px; font-weight:700; margin-top:6px;">Wedding</div>
+                <div class="tnum" style="font-size:13px; font-weight:800; margin-top:2px;">Rp 18M / 40M</div>
+                <div
+                  style="margin-top:8px; height:4px; background:rgba(28,28,46,0.15); border-radius:999px; overflow:hidden;">
+                  <div style="width:45%; height:100%; background:var(--hd-dark);"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Widget (narrow) -->
+        <div class="fcard fcard--narrow">
+          <span class="tag-pill" data-i18n="f5_pill">Home widget</span>
+          <h3 data-i18n="f5_h3">Today's spend on your home screen.</h3>
+          <p data-i18n="f5_p">Medium + small widgets for lock screen, home screen, and StandBy.</p>
+          <div class="fvisual">
+            <div style="background:var(--hd-dark); color:#fff; border-radius:22px; padding:16px; width:100%;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div
+                  style="font-size:10px; font-weight:700; color:rgba(255,255,255,0.55); text-transform:uppercase; letter-spacing:0.08em;">
+                  Today</div>
+                <img src="assets/logo.jpg" alt="Waltly"
+                  style="width:20px; height:20px; border-radius:6px; object-fit:cover; display:block;">
+              </div>
+              <div class="tnum" style="font-size:22px; font-weight:800; margin-top:8px;">Rp 127k</div>
+              <div style="font-size:11px; color:rgba(255,255,255,0.55); margin-top:2px;">of Rp 200k budget</div>
+              <div
+                style="margin-top:10px; height:6px; background:rgba(255,255,255,0.1); border-radius:999px; overflow:hidden;">
+                <div style="width:63%; height:100%; background:var(--hd-lime);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Privacy (wide) -->
+        <div class="fcard fcard--wide">
+          <span class="tag-pill" data-i18n="f6_pill">Private by default</span>
+          <h3 data-i18n="f6_h3">Your money stays on your phone. Period.</h3>
+          <p data-i18n="f6_p">No bank logins, no screen-scraping, no "we value your privacy" theater. Waltly runs fully
+            on-device with optional iCloud backup — encrypted end-to-end.</p>
+          <div class="fvisual">
+            <div style="display:flex; gap:12px; align-items:center; width:100%; justify-content:center;">
+              <div
+                style="background:#fff; border-radius:16px; padding:14px 18px; box-shadow:0 4px 14px rgba(0,0,0,0.05); display:flex; align-items:center; gap:10px;">
+                <div
+                  style="width:28px; height:28px; border-radius:8px; background:var(--hd-lime); color:var(--hd-dark); display:flex; align-items:center; justify-content:center;">
+                  🔒</div>
+                <div style="font-size:13px; font-weight:700;">On-device only</div>
+              </div>
+              <div
+                style="background:#fff; border-radius:16px; padding:14px 18px; box-shadow:0 4px 14px rgba(0,0,0,0.05); display:flex; align-items:center; gap:10px;">
+                <div
+                  style="width:28px; height:28px; border-radius:8px; background:var(--hd-dark); color:#fff; display:flex; align-items:center; justify-content:center;">
+                  ☁</div>
+                <div style="font-size:13px; font-weight:700;">E2E iCloud sync</div>
+              </div>
+              <div
+                style="background:#fff; border-radius:16px; padding:14px 18px; box-shadow:0 4px 14px rgba(0,0,0,0.05); display:flex; align-items:center; gap:10px;">
+                <div
+                  style="width:28px; height:28px; border-radius:8px; background:var(--hd-income-tint); color:var(--hd-income-text); display:flex; align-items:center; justify-content:center;">
+                  ✕</div>
+                <div style="font-size:13px; font-weight:700;">Zero ads, ever</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="wrap" id="how">
+    <div class="steps">
+      <div class="sec-head">
+        <div class="sec-eye" data-i18n="how_eye">How it works</div>
+        <div class="sec-title" style="color:#fff;" data-i18n-html="how_title">Three steps. <span class="hl-dark">That's
+            it.</span></div>
+      </div>
+      <div class="wrap step-row">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h4 data-i18n="s1_h4">Set your monthly budget</h4>
+          <p data-i18n="s1_p">Pick categories that matter — Food, Transit, Bills — and assign a rupiah cap to each.
+            Recurring templates do the heavy lifting every month.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h4 data-i18n="s2_h4">Log as you spend</h4>
+          <p data-i18n="s2_p">Widget, Control Center, or in-app — two taps and it's in. No receipt scanning, no bank
+            linking, no friction.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h4 data-i18n="s3_h4">Stay on track</h4>
+          <p data-i18n="s3_p">Green-amber-red cards tell you where you stand. Swipe months, jump to today, or scroll
+            back to see where it all went.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="tess">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eye" data-i18n="tess_eye">Testimonials</div>
+        <div class="sec-title" data-i18n="tess_title">What early users are saying.</div>
+      </div>
+      <div class="tess-grid">
+        <div class="tess-card">
+          <div class="stars">★★★★★</div>
+          <div class="tess-quote" style="margin-top:14px;" data-i18n="t1_q">"Finally a budget app that uses Rupiah
+            properly and isn't trying to connect to my bank. The Control Center shortcut is genius — I log every gojek
+            instantly."</div>
+          <div class="tess-who">
+            <div class="tess-av" style="background:var(--hd-lime); color:var(--hd-dark);">D</div>
+            <div>
+              <div class="tess-name">Dimas R.</div>
+              <div class="tess-role" data-i18n="t1_role">Jakarta · Designer</div>
+            </div>
+          </div>
+        </div>
+        <div class="tess-card alt">
+          <div class="stars">★★★★★</div>
+          <div class="tess-quote" style="margin-top:14px;" data-i18n="t2_q">"Aplikasi budget paling simpel yang pernah
+            saya coba. Satu kali bayar, nggak ada langganan tiap bulan. Warna hijau-kuning-merah-nya langsung kelihatan
+            budget-nya gimana."</div>
+          <div class="tess-who">
+            <div class="tess-av" style="background:var(--hd-dark);">S</div>
+            <div>
+              <div class="tess-name">Sari P.</div>
+              <div class="tess-role" data-i18n="t2_role">Surabaya · Freelancer</div>
+            </div>
+          </div>
+        </div>
+        <div class="tess-card">
+          <div class="stars">★★★★★</div>
+          <div class="tess-quote" style="margin-top:14px;" data-i18n="t3_q">"Used YNAB for years, switched over because
+            subscription fatigue is real. Waltly does 90% of what I needed, beautifully, for the price of one coffee."
+          </div>
+          <div class="tess-who">
+            <div class="tess-av" style="background:var(--hd-blush); color:var(--hd-dark);">A</div>
+            <div>
+              <div class="tess-name">Alya K.</div>
+              <div class="tess-role" data-i18n="t3_role">Bandung · PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="price" id="pricing">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eye" data-i18n="price_eye">Pricing</div>
+        <div class="sec-title" data-i18n-html="price_title">Bayar sekali. <span class="hl-dark">Pakai selamanya.</span>
+        </div>
+        <div class="sec-sub" data-i18n="price_sub">No subscriptions. No "lifetime deal" gimmicks. Just pay once and you
+          own it.</div>
+      </div>
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="price-name" data-i18n="free_name">Free</div>
+          <div class="price-big">Rp 0<span class="price-strike"></span></div>
+          <div class="price-sub" data-i18n="free_sub">Forever. Satu wallet, unlimited transactions.</div>
+          <ul class="price-list">
+            <li><span class="price-check">✓</span> <span data-i18n="free_f1">Unlimited transactions</span></li>
+            <li><span class="price-check">✓</span> <span data-i18n="free_f2">1 wallet, 5 categories</span></li>
+            <li><span class="price-check">✓</span> <span data-i18n="free_f3">Monthly budget + summary</span></li>
+            <li><span class="price-check">✓</span> <span data-i18n="free_f4">Bahasa Indonesia + English</span></li>
+          </ul>
+          <button class="price-btn outline" data-i18n="free_btn">Get Waltly Free</button>
+        </div>
+        <div class="price-card pro">
+          <div class="price-name" data-i18n="pro_name">Pro Unlock</div>
+          <div class="price-big">Rp 79k<span class="price-strike" style="color:rgba(255,255,255,0.4);">Rp 149k</span>
+          </div>
+          <div class="price-sub" data-i18n="pro_sub">One-time. Launch price — ends 31 May 2026.</div>
+          <ul class="price-list">
+            <li><span class="price-check">✓</span> <span data-i18n="pro_f1">Everything in Free</span></li>
+            <li><span class="price-check">✓</span> <span data-i18n="pro_f2">Unlimited wallets & categories</span></li>
+            <li><span class="price-check">✓</span> <span data-i18n="pro_f3">Widgets + Control Center quick-add</span>
+            </li>
+            <li><span class="price-check">✓</span> <span data-i18n="pro_f4">Trip & event funds</span></li>
+            <li><span class="price-check">✓</span> <span data-i18n="pro_f5">Recurring budget templates</span></li>
+            <li><span class="price-check">✓</span> <span data-i18n="pro_f6">iCloud sync (E2E encrypted)</span></li>
+            <li><span class="price-check">✓</span> <span data-i18n="pro_f7">CSV export</span></li>
+          </ul>
+          <button class="price-btn lime" data-i18n="pro_btn">Unlock Pro — Rp 79,000</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eye" data-i18n="faq_eye">FAQ</div>
+        <div class="sec-title" data-i18n="faq_title">Questions, answered.</div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-q"><span data-i18n="faq1_q">Does Waltly connect to my bank?</span> <span
+              class="faq-chev">+</span></div>
+          <div class="faq-a" data-i18n="faq1_a">No — and that's by design. Indonesian banks don't offer clean developer
+            APIs, and screen-scraping is fragile and risky. You log transactions manually (2 taps via widget), so your
+            money data never leaves your phone.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span data-i18n="faq2_q">Is it really one-time payment?</span> <span
+              class="faq-chev">+</span></div>
+          <div class="faq-a" data-i18n="faq2_a">Yes. Pay Rp 79,000 once and Pro is yours forever — on every iOS device
+            signed in with your Apple ID. No renewal, no surprise charges, no feature held hostage by a subscription.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span data-i18n="faq3_q">Do you support Android?</span> <span class="faq-chev">+</span>
+          </div>
+          <div class="faq-a" data-i18n="faq3_a">Not yet. Waltly is built iOS-first to take full advantage of widgets,
+            Control Center, StandBy, and SwiftUI polish. Android is on the roadmap for 2027.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span data-i18n="faq4_q">Can I export my data?</span> <span class="faq-chev">+</span></div>
+          <div class="faq-a" data-i18n="faq4_a">Absolutely. Pro users can export full transaction history as CSV at any
+            time. Your data is yours — if you ever leave, you walk out with everything.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span data-i18n="faq5_q">What languages are supported?</span> <span
+              class="faq-chev">+</span></div>
+          <div class="faq-a" data-i18n="faq5_a">Bahasa Indonesia and English at launch. Every label, tooltip, and copy
+            string is written natively in both — not machine-translated. More languages coming based on user votes.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY POLICY -->
+  <section class="legal" id="privacy">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eye" data-i18n="legal_eye">Legal</div>
+        <div class="sec-title" data-i18n="privacy_title">Privacy Policy</div>
+      </div>
+      <div class="legal-doc">
+        <div class="legal-updated" data-i18n="privacy_updated">Last updated: April 18, 2026</div>
+
+        <p data-i18n="privacy_p1">Waltly does not collect, store, or transmit any personal data to external servers.</p>
+        <p data-i18n="privacy_p2">All financial data you enter — transactions, wallets, budgets, and goals — is stored
+          locally on your device using Apple's native frameworks. Your data never leaves your device unless you
+          explicitly export it yourself.</p>
+
+        <h3 data-i18n="privacy_nouse_h">What we do not use</h3>
+        <ul>
+          <li data-i18n="privacy_li1">Analytics or tracking tools</li>
+          <li data-i18n="privacy_li2">Advertising networks</li>
+          <li data-i18n="privacy_li3">Third-party SDKs that collect data</li>
+          <li data-i18n="privacy_li4">Crash reporting services that transmit personal information</li>
+        </ul>
+
+        <h3 data-i18n="privacy_noacct_h">No account required</h3>
+        <p data-i18n="privacy_noacct_p">We do not require you to create an account.</p>
+
+        <h3 data-i18n="privacy_support_h">Support contact</h3>
+        <p data-i18n="privacy_support_p">If you contact us for support via email, we will use your email address solely
+          to respond to your inquiry and will not store it beyond that conversation.</p>
+
+        <h3 data-i18n="privacy_apple_h">Apple &amp; the App Store</h3>
+        <p data-i18n="privacy_apple_p">Apple may collect certain usage data through the App Store as outlined in Apple's
+          own privacy policy, which is independent of Waltly.</p>
+
+        <hr>
+        <p><span data-i18n="privacy_contact">For questions, contact:</span> <a
+            href="mailto:muhammmadabidd@gmail.com">muhammmadabidd@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMS OF USE -->
+  <section class="legal" id="terms">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-eye" data-i18n="legal_eye">Legal</div>
+        <div class="sec-title" data-i18n="terms_title">Terms of Use</div>
+      </div>
+      <div class="legal-doc">
+        <div class="legal-updated" data-i18n="terms_updated">Last updated: April 18, 2026</div>
+
+        <p data-i18n="terms_intro">By downloading or using Waltly, you agree to these terms.</p>
+
+        <h3 data-i18n="terms_license_h">License</h3>
+        <p data-i18n="terms_license_p">Waltly grants you a personal, non-transferable, non-exclusive license to use the
+          app on your Apple devices. You may not copy, modify, reverse engineer, or distribute the app.</p>
+
+        <h3 data-i18n="terms_data_h">Your data</h3>
+        <p data-i18n="terms_data_p">All data you enter into Waltly belongs to you. We have no access to it. You are
+          responsible for maintaining your own backups.</p>
+
+        <h3 data-i18n="terms_advice_h">No financial advice</h3>
+        <p data-i18n="terms_advice_p">Waltly is a personal budgeting tool. Nothing in the app constitutes financial,
+          investment, or legal advice. Always consult a qualified professional for financial decisions.</p>
+
+        <h3 data-i18n="terms_warranty_h">Disclaimer of warranties</h3>
+        <p data-i18n="terms_warranty_p">Waltly is provided "as is" without warranties of any kind. We do not guarantee
+          that the app will be error-free or uninterrupted.</p>
+
+        <h3 data-i18n="terms_liability_h">Limitation of liability</h3>
+        <p data-i18n="terms_liability_p">To the maximum extent permitted by law, Waltly and its developer shall not be
+          liable for any indirect, incidental, or consequential damages arising from your use of the app.</p>
+
+        <h3 data-i18n="terms_changes_h">Changes to these terms</h3>
+        <p data-i18n="terms_changes_p">We may update these terms at any time. Continued use of the app after changes
+          constitutes acceptance of the new terms.</p>
+
+        <hr>
+        <p><span data-i18n="terms_contact">Contact:</span> <a
+            href="mailto:muhammmadabidd@gmail.com">muhammmadabidd@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="wrap" id="download">
+    <div class="final">
+      <h2 data-i18n-html="final_h2">Mulai hitung duit kamu.<br>Hari ini.</h2>
+      <p data-i18n="final_p">Free forever. Upgrade to Pro when you're ready. Works on iPhone and iPad.</p>
+      <a href="#" class="btn-lime">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.05 12.5a4.44 4.44 0 012.12-3.73 4.55 4.55 0 00-3.58-1.95c-1.52-.16-2.97.89-3.75.89-.79 0-1.97-.87-3.25-.85a4.78 4.78 0 00-4.02 2.45c-1.72 2.98-.44 7.37 1.23 9.78.82 1.18 1.79 2.5 3.07 2.45 1.24-.05 1.7-.79 3.2-.79 1.48 0 1.9.79 3.21.76 1.33-.02 2.17-1.19 2.98-2.38a10.47 10.47 0 001.36-2.78 4.3 4.3 0 01-2.57-3.85zM14.66 5.16a4.3 4.3 0 001-3.16 4.42 4.42 0 00-2.86 1.48 4.07 4.07 0 00-1.02 3.04 3.64 3.64 0 002.88-1.36z" />
+        </svg>
+        <span data-i18n="final_btn">Download on the App Store</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap foot-row">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="assets/logo.jpg" alt="Waltly"
+          style="width:28px; height:28px; border-radius:8px; object-fit:cover; display:block;">
+        <span style="color:var(--hd-dark); font-weight:700;">Waltly</span>
+        <span style="font-size:13px;">© 2026</span>
+      </div>
+      <div class="foot-links">
+        <a href="#privacy" data-i18n="foot_privacy">Privacy</a>
+        <a href="#terms" data-i18n="foot_terms">Terms</a>
+        <a href="mailto:muhammmadabidd@gmail.com" data-i18n="foot_support">Support</a>
+        <a href="#" data-i18n="foot_twitter">Twitter</a>
+        <a href="#" data-i18n="foot_ig">Instagram</a>
+      </div>
+    </div>
+    <div class="wrap"
+      style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(28,28,46,0.06); font-size: 12px; color: var(--hd-muted); text-align: center; line-height: 1.7;">
+      © 2026 Waltly. All rights reserved.<br>
+      Waltly and its content are protected by copyright law. Unauthorized reproduction or distribution is prohibited.
+    </div>
+  </footer>
+
+
+
+</body>
+
+</html>
